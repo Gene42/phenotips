@@ -255,7 +255,7 @@ public class PhenoTipsPatient extends AbstractPrimaryEntity implements Patient
                 }
             }
 
-            if (save && saveIfDirty(this.document, saveOnlyIfDirty)) {
+            if (save && shouldSaveIfDirty(this.document, saveOnlyIfDirty)) {
                 this.document.setAuthorReference(context.getUserReference());
                 context.getWiki().saveDocument(this.document, "Updated from JSON", true, context);
             }
@@ -301,7 +301,7 @@ public class PhenoTipsPatient extends AbstractPrimaryEntity implements Patient
         return toJSON().toString(2);
     }
 
-    private static boolean saveIfDirty(XWikiDocument document, boolean saveOnlyIfDirty)
+    private static boolean shouldSaveIfDirty(XWikiDocument document, boolean saveOnlyIfDirty)
     {
         return (!saveOnlyIfDirty || document.isContentDirty());
     }
