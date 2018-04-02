@@ -280,7 +280,7 @@ public class PhenoTipsPatient extends AbstractPrimaryEntity implements Patient
      */
     public void updateFromJSON(JSONObject json, boolean saveOnlyIfDirty)
     {
-        this.updateFromJSON(json, true, true);
+        this.updateFromJSON(json, true, saveOnlyIfDirty);
     }
 
     /**
