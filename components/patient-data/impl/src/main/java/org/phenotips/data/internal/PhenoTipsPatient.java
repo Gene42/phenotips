@@ -269,7 +269,8 @@ public class PhenoTipsPatient extends AbstractPrimaryEntity implements Patient
             result.put(JSON_KEY_ID, getDocument().getName());
         }
 
-        if (getReporter() != null && isIncluded(controllers, JSON_KEY_REPORTER, excludeControllers)) {
+        if (getReporter() != null && (isIncluded(controllers, JSON_KEY_REPORTER, excludeControllers)
+            || isIncluded(controllers, PARAM_KEY_REFERRER, excludeControllers))) {
             result.put(JSON_KEY_REPORTER, getReporter().getName());
         }
     }
