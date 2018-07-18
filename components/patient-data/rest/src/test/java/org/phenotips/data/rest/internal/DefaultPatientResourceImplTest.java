@@ -25,6 +25,8 @@ import org.phenotips.rest.Autolinker;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.component.util.ReflectionUtils;
+import org.xwiki.container.Container;
+import org.xwiki.container.servlet.ServletRequest;
 import org.xwiki.context.Execution;
 import org.xwiki.context.ExecutionContext;
 import org.xwiki.model.reference.DocumentReference;
@@ -41,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Provider;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -65,6 +68,7 @@ import com.xpn.xwiki.doc.XWikiDocument;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasValue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -129,6 +133,17 @@ public class DefaultPatientResourceImplTest
         this.access = this.mocker.getInstance(AuthorizationManager.class);
         this.users = this.mocker.getInstance(UserManager.class);
 
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+        ServletRequest servletRequest = mock(ServletRequest.class);
+        Container container = this.mocker.getInstance(Container.class);
+        doReturn(servletRequest).when(container).getRequest();
+        doReturn(httpServletRequest).when(servletRequest).getHttpServletRequest();
+        doReturn(new String[0]).when(httpServletRequest)
+            .getParameterValues(DefaultPatientResourceImpl.INCLUDE_CONTROLLER_URL_PARAM);
+        doReturn(null).when(httpServletRequest)
+            .getParameterValues(DefaultPatientResourceImpl.EXCLUDE_CONTROLLER_URL_PARAM);
+
+
         this.userProfileDocument = new DocumentReference("wiki", "user", "00000001");
         doReturn(this.currentUser).when(this.users).getCurrentUser();
         doReturn(this.userProfileDocument).when(this.currentUser).getProfileDocument();
@@ -180,7 +195,7 @@ public class DefaultPatientResourceImplTest
     public void getPatientNormalBehaviour()
     {
         doReturn(true).when(this.access).hasAccess(Right.VIEW, this.userProfileDocument, this.patientDocument);
-        doReturn(new JSONObject()).when(this.patient).toJSON();
+        doReturn(new JSONObject()).when(this.patient).toJSON(anySetOf(String.class), eq(false));
 
         Response response = this.patientResource.getPatient(this.id);
 

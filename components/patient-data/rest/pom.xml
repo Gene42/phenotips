@@ -28,10 +28,42 @@
   <artifactId>patient-data-rest</artifactId>
   <name>PhenoTips - Patient Data - REST services</name>
 
+  <version>1.3.7-gene42</version>
   <properties>
     <checkstyle.suppressions.location>${basedir}/src/checkstyle/checkstyle-suppressions.xml</checkstyle.suppressions.location>
     <coverage.instructionRatio>0.74</coverage.instructionRatio>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>gene42-phenotips-public</id>
+      <name>Gene42 PhenoTips Public Repository Group</name>
+      <url>https://nexus.gene42.com/repository/gene42-public-group/</url>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <!-- Remember to set up a server entry for 'nexus.gene42.com' in your maven settings.xml -->
+  <distributionManagement>
+    <repository>
+      <id>nexus.gene42.com</id>
+      <name>Maven2 Remote Repository for Releases</name>
+      <url>https://nexus.gene42.com/repository/gene42-public-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus.gene42.com</id>
+      <name>Maven2 Development Repository for Snapshots</name>
+      <url>https://nexus.gene42.com/repository/gene42-public-snapshots/</url>
+    </snapshotRepository>
+    <site />
+  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -47,7 +79,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>phenotips-rest-commons</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.commons</groupId>
@@ -90,6 +122,11 @@
       <version>${xwiki.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-container-servlet</artifactId>
+      <version>${xwiki.version}</version>
+    </dependency>
+    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>patient-data-api</artifactId>
       <version>${project.version}</version>
@@ -97,7 +134,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>xwiki-platform-users-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.ws.rs</groupId>
@@ -119,16 +156,15 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
     <!-- Test dependencies -->
     <dependency>
       <groupId>org.xwiki.commons</groupId>
       <artifactId>xwiki-commons-tool-test-component</artifactId>
       <version>${xwiki.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -153,7 +189,7 @@
               <dependencyResource>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>phenotips-rest-commons</artifactId>
-                <version>${project.version}</version>
+                <version>${phenotips.version}</version>
                 <resource>rest-commons.cat</resource>
               </dependencyResource>
             </catalog>

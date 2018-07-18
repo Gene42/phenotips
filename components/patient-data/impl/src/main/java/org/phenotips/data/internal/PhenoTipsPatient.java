@@ -39,6 +39,10 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.collections4.CollectionUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -224,6 +228,65 @@ public class PhenoTipsPatient extends AbstractPrimaryEntity implements Patient
         return result;
     }
 
+    @Override
+    public JSONObject toJSON(@Nullable final Set<String> controllers, final boolean excludeControllers)
+    {
+        // If inclusion/exclusion list of controllers is set to null, then write data for all the controllers.
+        if (controllers == null) {
+            return toJSON();
+        }
+        final JSONObject result = new JSONObject();
+        // There are no controllers for the ID and reporter, so need to do an explicit check here :(.
+        writeIdAndReporter(result, controllers, excludeControllers);
+        // Get all the keys for all the controllers.
+        final Set<String> allKeys = this.serializers.keySet();
+        // If the specified set of controllers is an exclusion list, then remove excluded controllers from the set of
+        // all controller keys. If it is an inclusion list, then find an intersection between all controllers and
+        // inclusion list.
+        final Collection<String> selectedKeys = excludeControllers
+            ? CollectionUtils.removeAll(allKeys, controllers)
+            : CollectionUtils.intersection(allKeys, controllers);
+        // Iterate through all of the selected keys, and write JSON.
+        for (final String key : selectedKeys) {
+            final PatientDataController<?> serializer = this.serializers.get(key);
+            serializer.writeJSON(this, result);
+        }
+        return result;
+    }
+
+    /**
+     * Writes the patient identifier and the reporter to the provided {@code result} json, iff the two controllers are
+     * present in {@code selected}.
+     *
+     * @param result the {@link JSONObject} containing patient data; may not be null
+     * @param controllers a {@link Collection} of controllers; may not be null
+     * @param excludeControllers true iff {@code controllers} should be treated as exclusions
+     */
+    private void writeIdAndReporter(@Nonnull final JSONObject result, @Nonnull final Collection<String> controllers,
+        final boolean excludeControllers)
+    {
+        if (isIncluded(controllers, JSON_KEY_ID, excludeControllers)) {
+            result.put(JSON_KEY_ID, getDocument().getName());
+        }
+
+        if (getReporter() != null && isIncluded(controllers, JSON_KEY_REPORTER, excludeControllers)) {
+            result.put(JSON_KEY_REPORTER, getReporter().getName());
+        }
+    }
+
+    /**
+     * Returns true iff {@code key} should be included.
+     *
+     * @param controllers a {@link Collection} of controllers; may not be null
+     * @param key a key for the controller to check for inclusion
+     * @param excludeControllers true iff {@code controllers} should be treated as exclusions
+     * @return true iff {@code key} should be included
+     */
+    private boolean isIncluded(@Nonnull final Collection<String> controllers, @Nonnull final String key,
+        final boolean excludeControllers)
+    {
+        return (excludeControllers && !controllers.contains(key)) || (!excludeControllers && controllers.contains(key));
+    }
 
     private void updateFromJSON(JSONObject json, boolean save, boolean saveOnlyIfDirty)
     {

@@ -574,6 +574,12 @@
               <justification>Switched from net.sf.json to org.json.</justification>
             </difference>
             <difference>
+              <className>org/phenotips/data/Patient</className>
+              <differenceType>7012</differenceType>
+              <method>org.json.JSONObject toJSON(java.util.Set, boolean)</method>
+              <justification>New method to allow to include and exclude controllers</justification>
+            </difference>
+            <difference>
               <className>org/phenotips/data/*</className>
               <differenceType>7005</differenceType>
               <method>*</method>
@@ -1058,8 +1064,8 @@
           <version>3.6.1</version>
           <!-- Java 1.7 is required -->
           <configuration>
-            <source>1.7</source>
-            <target>1.7</target>
+            <source>1.8</source>
+            <target>1.8</target>
           </configuration>
         </plugin>
         <plugin>
