@@ -80,7 +80,13 @@ $xwiki.ssfx.use('icons/font-awesome/css/font-awesome.min.css')##
 #else
 (% class="group-logo" %)(((#if ("$!{doc.getObject('PhenoTips.PhenoTipsGroupClass').getProperty('image').value}" != '')$doc.display('image')#{else}$xwiki.getDocument('PhenoTips.PhenoTipsGroupTemplate').display('image')#{end})))$doc.display('description')
 
-#set ($isMyGroup = $xwiki.user.isUserInGroup($doc.fullName) || $xwiki.user.isUserInGroup("${doc.fullName} Administrators"))
+#set ($isMyGroup = false)
+#foreach ($group in $services.groups.getGroupsForUser($services.users.getCurrentUser()))
+  #if ($doc.documentReference.equals($group.reference))
+    #set ($isMyGroup = true)
+    #break
+  #end
+#end
 #if ($isMyGroup){{info}}{{translation key="phenotips.groups.selfMembership"/}}{{/info}}#end
 (% class="clearfloats" %)((()))
 #end
@@ -439,8 +445,7 @@ $xwiki.ssfx.use('icons/font-awesome/css/font-awesome.min.css')##
     </class>
     <property>
       <content>{{velocity}}
-$xwiki.ssx.use('PhenoTips.PhenoTipsGroupSheet')##
-#if ($xcontext.action == 'view' &amp;&amp; $hasEdit &amp;&amp; ($doc.getObject('PhenoTips.PhenoTipsGroupClass') || $doc.getObject('XWiki.XWikiGroups') &amp;&amp; $doc.space == 'Groups'))(% class="doc-tools buttonwrapper" %)((([[ {{icon name="pencil"/}}&gt;&gt;path:$doc.getURL('edit') || title="$services.localization.render('phenotips.groups.edit')" class="doc-tool edit button"]])))#end{{/velocity}}</content>
+#if ($xcontext.action == 'view' &amp;&amp; $hasEdit &amp;&amp; ($doc.getObject('PhenoTips.PhenoTipsGroupClass') || $doc.getObject('XWiki.XWikiGroups') &amp;&amp; $doc.space == 'Groups'))$!xwiki.ssx.use('PhenoTips.PhenoTipsGroupSheet')(% class="doc-tools buttonwrapper" %)((([[ {{icon name="pencil"/}}&gt;&gt;path:$doc.getURL('edit') || title="$services.localization.render('phenotips.groups.edit')" class="doc-tool edit button"]])))#end{{/velocity}}</content>
     </property>
     <property>
       <extensionPointId>org.xwiki.platform.content.top</extensionPointId>
