@@ -35,6 +35,19 @@
 
   <repositories>
     <repository>
+      <id>phenotips-releases</id>
+      <name>PhenoTips Releases repository</name>
+      <url>https://nexus.phenotips.org/nexus/content/repositories/releases/</url>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+      </snapshots>
+    </repository>
+    <repository>
       <id>gene42-phenotips-public</id>
       <name>Gene42 PhenoTips Public Repository Group</name>
       <url>https://nexus.gene42.com/repository/gene42-public-group/</url>
@@ -121,4 +134,44 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <!-- Lock down plugin version for build reproducibility -->
+          <version>3.6.1</version>
+          <!-- Java 1.7 is required -->
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <!-- API backwards compatibility check -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>clirr-maven-plugin</artifactId>
+        <configuration>
+          <comparisonVersion>1.3.7</comparisonVersion>
+          <!-- List of specific CLIRR excludes.
+               See http://www.mojohaus.org/clirr-maven-plugin/examples/ignored-differences.html
+          -->
+          <ignored>
+            <!-- Remove the following ignores after we release 1.3 -->
+            <difference>
+              <className>org/phenotips/data/Patient</className>
+              <differenceType>7012</differenceType>
+              <method>org.json.JSONObject toJSON(java.util.Set, boolean)</method>
+              <justification>New method to allow to include and exclude controllers</justification>
+            </difference>
+          </ignored>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
