@@ -1303,12 +1303,20 @@ define([
            if (fatherLink == null) {
                var fatherID = newG._addVertex( null, BaseGraph.TYPE.PERSON, {"gender": "M", "comments": "unknown"}, newG.defaultPersonNodeWidth );
            } else {
-               var fatherID = externalIDToID[fatherLink];
+               // FIXME: some applications produce a GEDCOM file where links have incorrect IDs,
+               //        where a correct reference "@Ixxx@" is replaced by "@xxx@". So as a quick fix an attemptis made to either look up
+               //        the proper ID, or the ID with an "I" pefix attached before the numeric part of the ID.
+               var fatherID = externalIDToID.hasOwnProperty(fatherLink)
+                                  ? externalIDToID[fatherLink]
+                                  : externalIDToID[fatherLink.replace(/^@(\d+)/,"@I$1")];
            }
            if (motherLink == null) {
                var motherID = newG._addVertex( null, BaseGraph.TYPE.PERSON, {"gender": "F", "comments": "unknown"}, newG.defaultPersonNodeWidth );
            } else {
-               var motherID = externalIDToID[motherLink];
+               // FIXME: same quick fix as for the fatherID above
+               var motherID = externalIDToID.hasOwnProperty(motherLink)
+                                  ? externalIDToID[motherLink]
+                                  : externalIDToID[motherLink.replace(/^@(\d+)/,"@I$1")];
            }
 
            // both motherID and fatherID are now given and represent valid existing nodes in the pedigree
@@ -1330,9 +1338,12 @@ define([
            for (var j = 0; j < children.length; j++) {
                var externalID = children[j].value;
 
-               var childID = externalIDToID.hasOwnProperty(externalID) ? externalIDToID[externalID] : null;
+               // FIXME: same quick fix as for motherID/fatherID
+               var childID = externalIDToID.hasOwnProperty(externalID)
+                                 ? externalIDToID[externalID]
+                                 : externalIDToID[externalID.replace(/^@(\d+)/,"@I$1")];
 
-               if (childID == null) {
+               if (childID === undefined) {
                    throw "Unable to import pedigree: child link does not point to an existing individual: [" + externalID + "]";
                }
 
