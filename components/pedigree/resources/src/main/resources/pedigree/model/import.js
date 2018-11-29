@@ -1309,6 +1309,10 @@ define([
                var fatherID = externalIDToID.hasOwnProperty(fatherLink)
                                   ? externalIDToID[fatherLink]
                                   : externalIDToID[fatherLink.replace(/^@(\d+)/,"@I$1")];
+
+               if (fatherID == undefined) {
+                   throw "Unable to import pedigree: father link does not point to an existing individual: [" + fatherLink + "]";
+               }
            }
            if (motherLink == null) {
                var motherID = newG._addVertex( null, BaseGraph.TYPE.PERSON, {"gender": "F", "comments": "unknown"}, newG.defaultPersonNodeWidth );
@@ -1317,6 +1321,10 @@ define([
                var motherID = externalIDToID.hasOwnProperty(motherLink)
                                   ? externalIDToID[motherLink]
                                   : externalIDToID[motherLink.replace(/^@(\d+)/,"@I$1")];
+
+               if (motherID == undefined) {
+                   throw "Unable to import pedigree: mother link does not point to an existing individual: [" + motherLink + "]";
+               }
            }
 
            // both motherID and fatherID are now given and represent valid existing nodes in the pedigree
