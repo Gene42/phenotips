@@ -415,8 +415,8 @@ define([
                         throw "Assertion failed: all relationships should have only one outedge (to a childhub) (failed for " + this.getVertexDescription(v) + ")";
                     if (!this.isChildhub(outEdges[0]))
                         throw "Assertion failed: relationships should only have out edges to childhubs (failed for " + this.getVertexDescription(v) + ")";
-                    if (inEdges.length != 2)
-                        throw "Assertion failed: relationships should always have exactly two associated persons (failed for " + this.getVertexDescription(v) + ")";
+                    if (inEdges.length < 1 || inEdges.length > 2)
+                        throw "Assertion failed: relationships should always have one or two associated persons (failed for " + this.getVertexDescription(v) + ")";
                 }
                 else if (this.isVirtual(v)) {
                     if (outEdges.length != 1)
@@ -687,6 +687,9 @@ define([
             var result = [];
             for (var r = 0; r < relationships.length; ++r) {
                 var partners = this.getParents(relationships[r]);
+                if (partners.length < 2) {
+                    continue;  // a relationship with just one partner => v itself is that partner, ignore
+                }
                 if (partners[0] != v)
                     result.push(partners[0]);
                 else
@@ -708,28 +711,34 @@ define([
 
             var inEdges = this.getInEdges(parentRelationship);
 
-            if (inEdges.length != 2)
-                throw "Assertion failed: exactly two parents";
-
-            return [this.upTheChainUntilNonVirtual(inEdges[0]), this.upTheChainUntilNonVirtual(inEdges[1])];
+            var result = [];
+            for (var i = 0; i < inEdges.length; i++) {
+                result.push(this.upTheChainUntilNonVirtual(inEdges[i]));
+            }
+            return result;
         },
 
         // returns a bottom-to-top path
         getPathToParents: function(v)
         {
-            // returns an array with two elements: path to parent1 (excluding v) and path to parent2 (excluding v):
-            // [ [virtual_node_11, ..., virtual_node_1n, parent1], [virtual_node_21, ..., virtual_node_2n, parent21] ]
-
-            var result = [];
-
+            // returns an array with one or two (or, in a future version, more) elements, each element being
+            // an object { "parent": p, "path": [path_to_p] }.
+            //
+            // Each path is a bottom-to-top (in order of decreasing ranks) list of nodes connecting v and a parent of v,
+            // excluding v but including the parent:
+            //  - if there are no multi-generational edges, the path would be just an array with one element: [parent_N]
+            //  - otherwise the path is an array with one or more multi-generation edge pieces ("virtual nodes") and finally
+            //    the parent person node: [virtual_node_X1, ..., virtual_node_Xn, parent_X]
+            
             if (!this.isRelationship(v))
                 throw "Assertion failed: incorrect v in getPathToParents()";
 
             var inEdges = this.getInEdges(v);
-
-            result.push( this._getUpPathEndingInNonVirtual(inEdges[0]) );
-            result.push( this._getUpPathEndingInNonVirtual(inEdges[1]) );
-
+            
+            var result = [];            
+            for (var i = 0; i < inEdges.length; i++) {
+                result.push( this._getUpPathEndingInNonVirtual(inEdges[i]) );
+            }
             return result;
         },
 
@@ -740,7 +749,7 @@ define([
             while (this.isVirtual(v))
             {
                 path.push(v)
-                v = this.inedges[v][0];
+                v = this.inedges[v][0];  // virtual edges always have only one in-edge
             }
 
             return {"parent": v, "path": path};
@@ -796,7 +805,7 @@ define([
         downTheChainUntilNonVirtual: function(v) {
             if (!this.isVirtual(v)) return v;
 
-            return this.downTheChainUntilNonVirtual( this.v[v][0] );  // virtual nodes have only one in-edges, all the way up until a person node
+            return this.downTheChainUntilNonVirtual( this.v[v][0] );  // virtual nodes have only one out-edges, all the way down until a relationship node
         },
 
         getUnusedTwinGroupId: function(v)
@@ -902,10 +911,12 @@ define([
             return ancestors;
         },
 
-        // Returns an object with "mother" and "father" properties. One or both can be undefined, or nodeID
-        // "undefined' means there are no parent(s) or parent gender does not alow mother/father indentification
-        // (e.g. gender is "other" or there is more than one parent of the same gender)
-        // Includes all other parents in the "other" array
+        // Returns an object with "mother", "father" and "other" properties.
+        // "mother and/or "father" may be undefined, "other" is always (a possibly empty) array.
+        //
+        // When a mother or father is "undefined" it means there is no corresponding parent or parent gender does not
+        // allow mother/father indentification (e.g. gender is "other" or there is more than one parent of the same gender)
+        // Includes all parents not specified as mother or father in the "other" array
         getMotherFather: function(v) {
             var result = {"mother": undefined, "father": undefined, "other": []};
 
