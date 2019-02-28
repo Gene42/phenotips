@@ -25,15 +25,23 @@ import org.phenotips.rest.Autolinker;
 import org.phenotips.security.authorization.AuthorizationService;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.container.Container;
+import org.xwiki.container.servlet.ServletRequest;
 import org.xwiki.rest.XWikiResource;
 import org.xwiki.security.authorization.Right;
 import org.xwiki.users.User;
 import org.xwiki.users.UserManager;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -53,6 +61,12 @@ import org.json.JSONObject;
 @Singleton
 public class DefaultPatientResourceImpl extends XWikiResource implements PatientResource
 {
+    /** Name of the URL parameter used for excluding a given controller when retrieving a patient. */
+    public static final String EXCLUDE_CONTROLLER_URL_PARAM = "excludeController";
+
+    /** Name of the URL parameter used for including a given controller when retrieving a patient. */
+    public static final String INCLUDE_CONTROLLER_URL_PARAM = "includeController";
+
     @Inject
     private PatientRepository repository;
 
@@ -64,6 +78,13 @@ public class DefaultPatientResourceImpl extends XWikiResource implements Patient
 
     @Inject
     private Provider<Autolinker> autolinker;
+
+    /**
+     * Needed for getting access to the servlet request, which is used to determine which controllers are selected for
+     * JSON export.
+     */
+    @Inject
+    private Container container;
 
     @Override
     public Response getPatient(String id)
@@ -90,7 +111,7 @@ public class DefaultPatientResourceImpl extends XWikiResource implements Patient
             && this.access.hasAccess(currentUser, manageRight, patient.getDocumentReference())) {
             grantedRight = manageRight;
         }
-        JSONObject json = patient.toJSON();
+        JSONObject json = getPatientJson(patient);
         json.put("links",
             this.autolinker.get().forResource(getClass(), this.uriInfo)
                 .withExtraParameters("entity-type", "patients")
@@ -119,7 +140,7 @@ public class DefaultPatientResourceImpl extends XWikiResource implements Patient
      * not changed, unless {@link PatientWritePolicy#REPLACE} is selected.
      *
      * @param json the JSON representation of the new patient to add
-     * @param id the patient's internal identifier, see {@link org.phenotips.data.Patient#getId()}
+     * @param id the patient's internal identifier, see {@link Patient#getId()}
      * @param policy the {@link PatientWritePolicy} according to which the patient should be updated
      * @return a status message
      */
@@ -185,5 +206,41 @@ public class DefaultPatientResourceImpl extends XWikiResource implements Patient
         }
         this.slf4Jlogger.debug("Deleted patient record [{}]", id);
         return Response.noContent().build();
+    }
+
+    /**
+     * Returns the {@link JSONObject} for the selected {@code patient}. Looks at {@link #INCLUDE_CONTROLLER_URL_PARAM}
+     * and {@link #EXCLUDE_CONTROLLER_URL_PARAM} HTTP request URL parameters. If both are specified, throws a
+     * {@link WebApplicationException}. If both are {@code null}, returns a {@link JSONObject} with all patient data. If
+     * {@link #INCLUDE_CONTROLLER_URL_PARAM} is specified, operates in whitelist mode using the provided set of
+     * controllers; if {@link #EXCLUDE_CONTROLLER_URL_PARAM} is specified, operates in blacklist mode using the provided
+     * set of controllers.
+     *
+     * Multiple include or exclude controllers maybe specified in typical servlet fashion by repeating the URL parameter
+     * with different argument values, e.g. includeController=controller1&amp;includeController=controller2.
+     *
+     * @param patient the {@link Patient} whose data is being serialized to {@link JSONObject}
+     * @return a {@link JSONObject} that contains the requested {@link Patient} data
+     */
+    private JSONObject getPatientJson(@Nonnull final Patient patient)
+    {
+        HttpServletRequest httpServletRequest = ((ServletRequest) this.container.getRequest()).getHttpServletRequest();
+        String[] excludedControllerArr = httpServletRequest.getParameterValues(EXCLUDE_CONTROLLER_URL_PARAM);
+        String[] includedControllerArr = httpServletRequest.getParameterValues(INCLUDE_CONTROLLER_URL_PARAM);
+        if (excludedControllerArr != null && includedControllerArr != null) {
+            this.slf4Jlogger.warn("Failed to resolve which data to retrieve: both {} and {} were provided",
+                INCLUDE_CONTROLLER_URL_PARAM, EXCLUDE_CONTROLLER_URL_PARAM);
+            throw new WebApplicationException(Status.BAD_REQUEST);
+        }
+
+        final boolean excludeControllers = includedControllerArr == null;
+        final Set<String> controllers;
+        if (excludeControllers) {
+            controllers = excludedControllerArr == null ? null : new HashSet<>(Arrays.asList(excludedControllerArr));
+        } else {
+            controllers = new HashSet<>(Arrays.asList(includedControllerArr));
+        }
+
+        return patient.toJSON(controllers, excludeControllers);
     }
 }

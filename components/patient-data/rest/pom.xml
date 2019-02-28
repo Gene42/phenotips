@@ -28,6 +28,7 @@
   <artifactId>patient-data-rest</artifactId>
   <name>PhenoTips - Patient Data - REST services</name>
 
+  <version>1.4.4-gene42</version>
   <properties>
     <coverage.instructionRatio>0.91</coverage.instructionRatio>
   </properties>
@@ -50,12 +51,12 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>phenotips-rest-commons</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>phenotips-authorization</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.commons</groupId>
@@ -98,6 +99,11 @@
       <version>${xwiki.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-container-servlet</artifactId>
+      <version>${xwiki.version}</version>
+    </dependency>
+    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>patient-data-api</artifactId>
       <version>${project.version}</version>
@@ -105,17 +111,17 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>phenotips-entities-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>xwiki-platform-users-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>application-configuration-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -150,6 +156,10 @@
       <artifactId>guava</artifactId>
     </dependency>
     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+    <dependency>
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
       <version>1.4.01</version>
@@ -164,11 +174,6 @@
       <groupId>org.xwiki.commons</groupId>
       <artifactId>xwiki-commons-tool-test-component</artifactId>
       <version>${xwiki.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -199,7 +204,7 @@
               <dependencyResource>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>phenotips-rest-commons</artifactId>
-                <version>${project.version}</version>
+                <version>${phenotips.version}</version>
                 <resource>rest-commons.cat</resource>
               </dependencyResource>
             </catalog>
