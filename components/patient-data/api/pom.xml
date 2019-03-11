@@ -30,8 +30,7 @@
 
   <version>1.4.4-gene42</version>
   <properties>
-    <!-- TODO: Add more tests, as necessary, and bring this back up. -->
-    <coverage.instructionRatio>0.92</coverage.instructionRatio>
+    <coverage.instructionRatio>0.93</coverage.instructionRatio>
   </properties>
 
   <dependencies>

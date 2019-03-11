@@ -30,8 +30,7 @@
 
   <version>1.4.4-gene42</version>
   <properties>
-    <!-- TODO: PhenoTipsPatient should have unit tests. -->
-    <coverage.instructionRatio>0.69</coverage.instructionRatio>
+    <coverage.instructionRatio>0.70</coverage.instructionRatio>
   </properties>
 
   <dependencies>
