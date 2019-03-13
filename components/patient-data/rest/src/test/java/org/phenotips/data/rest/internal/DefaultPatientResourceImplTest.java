@@ -40,8 +40,10 @@ import org.xwiki.users.UserManager;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
@@ -50,6 +52,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,6 +60,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
@@ -102,6 +107,15 @@ public class DefaultPatientResourceImplTest
     @Mock
     private UriInfo uriInfo;
 
+    @Mock
+    private ServletRequest request;
+
+    @Mock
+    private HttpServletRequest httpServletRequest;
+
+    @Captor
+    private ArgumentCaptor<Set<String>> setCaptor;
+
     private Logger logger;
 
     private PatientRepository repository;
@@ -129,14 +143,12 @@ public class DefaultPatientResourceImplTest
         this.repository = this.mocker.getInstance(PatientRepository.class);
         this.access = this.mocker.getInstance(AuthorizationService.class);
 
-        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-        ServletRequest servletRequest = mock(ServletRequest.class);
         Container container = this.mocker.getInstance(Container.class);
-        doReturn(servletRequest).when(container).getRequest();
-        doReturn(httpServletRequest).when(servletRequest).getHttpServletRequest();
-        doReturn(new String[0]).when(httpServletRequest)
+        doReturn(this.request).when(container).getRequest();
+        doReturn(this.httpServletRequest).when(this.request).getHttpServletRequest();
+        doReturn(new String[0]).when(this.httpServletRequest)
             .getParameterValues(DefaultPatientResourceImpl.INCLUDE_CONTROLLER_URL_PARAM);
-        doReturn(null).when(httpServletRequest)
+        doReturn(null).when(this.httpServletRequest)
             .getParameterValues(DefaultPatientResourceImpl.EXCLUDE_CONTROLLER_URL_PARAM);
 
         final UserManager users = this.mocker.getInstance(UserManager.class);
@@ -211,6 +223,72 @@ public class DefaultPatientResourceImplTest
         Map<String, List<Object>> actualMap = response.getMetadata();
         Assert.assertThat(actualMap, hasValue(hasItem(MediaType.APPLICATION_JSON_TYPE)));
         Assert.assertEquals(Status.OK.getStatusCode(), response.getStatus());
+    }
+
+    @Test
+    public void getPatientIncludedAndExcludedControllersProvided()
+    {
+        when(this.httpServletRequest.getParameterValues(DefaultPatientResourceImpl.EXCLUDE_CONTROLLER_URL_PARAM))
+                .thenReturn(ArrayUtils.toArray("features"));
+        when(this.httpServletRequest.getParameterValues(DefaultPatientResourceImpl.INCLUDE_CONTROLLER_URL_PARAM))
+                .thenReturn(ArrayUtils.toArray("disorders"));
+
+        doReturn(true).when(this.access).hasAccess(this.currentUser, Right.VIEW, this.patientDocument);
+        doReturn(new JSONObject()).when(this.patient).toJSON(anySetOf(String.class), eq(false));
+
+        try {
+            this.patientResource.getPatient(PATIENT_ID);
+            Assert.fail();
+        } catch (WebApplicationException ex) {
+            Assert.assertEquals(Status.BAD_REQUEST.getStatusCode(), ex.getResponse().getStatus());
+            verify(this.logger, times(1)).warn(
+                    "Failed to resolve which data to retrieve: both {} and {} were provided",
+                    DefaultPatientResourceImpl.INCLUDE_CONTROLLER_URL_PARAM,
+                    DefaultPatientResourceImpl.EXCLUDE_CONTROLLER_URL_PARAM);
+        }
+    }
+
+    @Test
+    public void getPatientHasExcludedControllers()
+    {
+        final String[] excludedArray = ArrayUtils.toArray("features", "disorders");
+        when(this.httpServletRequest.getParameterValues(DefaultPatientResourceImpl.EXCLUDE_CONTROLLER_URL_PARAM))
+                .thenReturn(excludedArray);
+        when(this.httpServletRequest.getParameterValues(DefaultPatientResourceImpl.INCLUDE_CONTROLLER_URL_PARAM))
+                .thenReturn(null);
+
+        doReturn(true).when(this.access).hasAccess(this.currentUser, Right.VIEW, this.patientDocument);
+        doReturn(new JSONObject()).when(this.patient).toJSON(anySetOf(String.class), eq(true));
+
+        this.patientResource.getPatient(PATIENT_ID);
+
+        verify(this.patient, times(1)).toJSON(this.setCaptor.capture(), eq(true));
+
+        final Set<String> expected = new HashSet<>();
+        expected.add("features");
+        expected.add("disorders");
+        Assert.assertEquals(expected, this.setCaptor.getValue());
+    }
+
+    @Test
+    public void getPatientHasIncludedControllers()
+    {
+        final String[] includedArray = ArrayUtils.toArray("features");
+        when(this.httpServletRequest.getParameterValues(DefaultPatientResourceImpl.EXCLUDE_CONTROLLER_URL_PARAM))
+                .thenReturn(null);
+        when(this.httpServletRequest.getParameterValues(DefaultPatientResourceImpl.INCLUDE_CONTROLLER_URL_PARAM))
+                .thenReturn(includedArray);
+
+        doReturn(true).when(this.access).hasAccess(this.currentUser, Right.VIEW, this.patientDocument);
+        doReturn(new JSONObject()).when(this.patient).toJSON(anySetOf(String.class), eq(false));
+
+        this.patientResource.getPatient(PATIENT_ID);
+
+        verify(this.patient, times(1)).toJSON(this.setCaptor.capture(), eq(false));
+
+        final Set<String> expected = new HashSet<>();
+        expected.add("features");
+        Assert.assertEquals(expected, this.setCaptor.getValue());
     }
 
     // ----------------------------Update Patient Tests----------------------------
