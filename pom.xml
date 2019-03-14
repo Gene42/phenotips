@@ -454,6 +454,22 @@
         <artifactId>batik-css</artifactId>
         <version>1.10</version>
       </dependency>
+      <!-- XWiki oldcore brings in Batik 1.8 via older fop version and on its own -->
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>fop</artifactId>
+        <version>2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-rasterizer</artifactId>
+        <version>1.10</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-codec</artifactId>
+        <version>1.10</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
