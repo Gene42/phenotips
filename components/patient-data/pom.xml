@@ -29,6 +29,21 @@
   <packaging>pom</packaging>
   <name>PhenoTips - Patient data</name>
 
+  <!-- Remember to set up a server entry for 'nexus.gene42.com' in your maven settings.xml -->
+  <distributionManagement>
+    <repository>
+      <id>nexus.gene42.com</id>
+      <name>Maven2 Remote Repository for Releases</name>
+      <url>https://nexus.gene42.com/repository/gene42-public-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus.gene42.com</id>
+      <name>Maven2 Development Repository for Snapshots</name>
+      <url>https://nexus.gene42.com/repository/gene42-public-snapshots/</url>
+    </snapshotRepository>
+    <site />
+  </distributionManagement>
+
   <modules>
     <module>api</module>
     <module>impl</module>
