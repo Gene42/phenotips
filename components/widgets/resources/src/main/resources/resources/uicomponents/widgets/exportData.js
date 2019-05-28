@@ -46,6 +46,23 @@ document.observe('xwiki:dom:loading', function() {
             fadeOnClear : false,
             timeout : 30000
         },
+        "mondo" : {
+            script: new XWiki.Document('SolrService', 'PhenoTips').getURL("get", "vocabulary=mondo") + "&",
+            varname: "q",
+            noresults: "$services.localization.render('phenotips.DBWebHomeSheet.noResults')",
+            json: true,
+            resultsParameter : "rows",
+            resultId : "id",
+            resultValue : "name",
+            resultAltName: "synonym",
+            resultCategory : "term_category",
+            resultInfo : {},
+            tooltip: 'mondo-disease-info',
+            enableHierarchy: true,
+            resultParent : "is_a",
+            fadeOnClear : false,
+            timeout : 30000
+        },
         "genes" : {
             script: new XWiki.Document('GeneNameService', 'PhenoTips').getURL('get', 'outputSyntax=plain') + "&",
             varname: "q",
