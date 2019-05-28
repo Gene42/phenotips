@@ -1,0 +1,734 @@
+format-version: 1.2
+data-version: releases/2019-04-29/reasoned.owl.owl
+ontology: mondo
+property_value: http://purl.org/dc/elements/1.1/title "MONDO: Monarch Disease Ontology" xsd:string
+property_value: http://purl.org/dc/terms/description "A semi-automatically constructed ontology that merges in multiple disease resources to yield a coherent merged ontology." xsd:string
+property_value: http://purl.org/dc/terms/license http://creativecommons.org/licenses/by/4.0/
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/chebi.owl
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/doid.owl
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/envo.owl
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/go.owl
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/hp.owl
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/mf.owl
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/ncbitaxon.owl
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/ncit.owl
+property_value: http://purl.org/dc/terms/source http://purl.obolibrary.org/obo/uberon.owl
+property_value: http://purl.org/dc/terms/source http://www.orpha.net/ontology/orphanet.owl
+property_value: http://purl.org/dc/terms/source https://id.nlm.nih.gov/mesh/
+property_value: http://purl.org/dc/terms/source https://rarediseases.info.nih.gov/
+property_value: http://xmlns.com/foaf/0.1/homepage http://obofoundry.org/ontology/mondo.html xsd:anyURI
+
+[Term]
+id: MONDO:0000001
+name: disease or disorder
+def: "A disease is a disposition to undergo pathological processes that exists in an organism because of one or more disorders in that organism." [OGMS:0000031]
+synonym: "condition" EXACT [NCIT:C2991]
+synonym: "disease" EXACT [NCIT:C2991]
+synonym: "disease or disorder" EXACT [NCIT:C2991]
+synonym: "disease or disorder, non-neoplastic" EXACT [NCIT:C2991]
+synonym: "diseases" EXACT [NCIT:C2991]
+synonym: "diseases and disorders" EXACT [NCIT:C2991]
+synonym: "disorder" EXACT [NCIT:C2991]
+synonym: "disorders" EXACT [NCIT:C2991]
+synonym: "medical condition" EXACT []
+synonym: "other disease" EXACT [NCIT:C2991]
+xref: DOID:4 {source="MONDO:equivalentTo", source="EFO:0000408"}
+xref: EFO:0000408 {source="MONDO:equivalentTo"}
+xref: ICD10:N18 {source="MONDO:equivalentTo"}
+xref: ICD9:799.9 {source="MONDO:relatedTo", source="i2s"}
+xref: MESH:D004194 {source="MONDO:equivalentTo", source="MONDO:ontobio", source="DOID:4", source="EFO:0000408"}
+xref: NCIT:C2991 {source="MONDO:equivalentTo", source="DOID:4"}
+xref: OGMS:0000031 {source="MONDO:equivalentTo"}
+xref: Orphanet:377788 {source="MONDO:equivalentTo"}
+xref: SCTID:64572001 {source="MONDO:equivalentTo", source="MONDO:kboom-pr-0.81/0.56/0.38", source="DOID:4", source="EFO:0000408"}
+xref: UMLS:C0012634 {source="MONDO:equivalentTo", source="NCIT:C2991", source="DOID:4"}
+property_value: exactMatch DOID:4
+property_value: exactMatch http://identifiers.org/mesh/D004194
+property_value: exactMatch http://identifiers.org/snomedct/64572001
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0012634
+property_value: exactMatch NCIT:C2991
+property_value: exactMatch Orphanet:377788
+
+[Term]
+id: MONDO:0020010
+name: infectious disease of the nervous system
+def: "A infectious disease that involves the nervous system." [MONDO:patterns/location]
+subset: ordo_group_of_disorders {source="Orphanet:98010"}
+synonym: "nervous system infectious disease" EXACT [MONDO:patterns/location]
+synonym: "nervous system infectious disorder" EXACT [NCIT:C27590]
+xref: ICD9:349.89 {source="MONDO:relatedTo", source="i2s"}
+xref: NCIT:C27590 {source="MONDO:equivalentTo"}
+xref: Orphanet:98010 {source="MONDO:equivalentTo"}
+xref: SCTID:128116006 {source="MONDO:kboom-pr-0.74/0.37/0.53", source="MONDO:equivalentTo"}
+xref: UMLS:C0597039 {source="MONDO:equivalentTo", source="ORDO:98010/e", source="NCIT:C27590", source="Orphanet:98010"}
+is_a: MONDO:0005071 {source="Orphanet:98010"} ! nervous system disorder
+is_a: MONDO:0005550 ! infectious disease
+relationship: has_modifier MONDO:0021136 {source="MONDO:0020009"} ! rare
+property_value: exactMatch http://identifiers.org/snomedct/128116006
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0597039
+property_value: exactMatch NCIT:C27590
+property_value: exactMatch Orphanet:98010
+
+[Term]
+id: MONDO:0024619
+name: central nervous system infectious disorder
+def: "An infectious process that affects the brain and/or spinal cord. Representative examples include encephalitis, poliomyelitis, arachnoiditis, and meningitis." [NCIT:C27582]
+synonym: "central nervous system infection" RELATED [MESH:D002494]
+synonym: "central nervous system infectious disease" EXACT [MONDO:patterns/location, NCIT:C27582]
+synonym: "central nervous system infectious disorder" EXACT [NCIT:C27582]
+synonym: "infections, central nervous system" RELATED [MESH:D002494]
+synonym: "infectious disease of central nervous system" EXACT [MONDO:0021684, NCIT:C27582]
+xref: EFO:1001456 {source="MONDO:equivalentTo"}
+xref: ICD9:349.89 {source="MONDO:relatedTo", source="i2s"}
+xref: MESH:D002494 {source="MONDO:equivalentTo"}
+xref: NCIT:C27582 {source="MONDO:equivalentTo"}
+xref: SCTID:128117002 {source="MONDO:equivalentTo"}
+xref: UMLS:C0007684 {source="NCIT:C27582", source="MONDO:equivalentTo"}
+is_a: MONDO:0002602 {source="MESH:D002494", source="MONDO:Redundant", source="MONDOLEX:0024619", source="NCIT:C27582/inferred", source="linkedlifedata"} ! central nervous system disease
+is_a: MONDO:0020010 {source="MONDO:Redundant", source="NCIT:C27582", source="linkedlifedata"} ! infectious disease of the nervous system
+property_value: exactMatch http://identifiers.org/mesh/D002494
+property_value: exactMatch http://identifiers.org/snomedct/128117002
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0007684
+property_value: exactMatch NCIT:C27582
+
+[Term]
+id: MONDO:0005429
+name: prion disease
+def: "A transmissible disease that is caused by a protein that is able to induce abnormal folding of normal cellular proteins, leading to characteristic spongiform brain changes, which are associated with neuronal loss without an inflammatory response. Such disorders have typically long incubation periods, but are then generally rapidly progressive and are uniformly fatal." [NCIT:C128346-modified]
+comment: Editor note: check relationship to spongiform encephalopathy NCIT:C27585
+synonym: "prion disease pathway" EXACT [DOID:649, NCIT:C38853]
+synonym: "prion induced disorder" EXACT [CSP2005:2042-5040, DOID:649]
+synonym: "prion protein disease" EXACT [DOID:649]
+synonym: "spongiform encephalopathy" EXACT [DOID:649, NCIT:C27585]
+synonym: "transmissible spongiform encephalopathy" EXACT [DOID:649]
+xref: DOID:649 {source="EFO:0004720", source="MONDO:equivalentTo"}
+xref: EFO:0004720 {source="MONDO:equivalentTo"}
+xref: ICD10:A81.9 {source="DOID:649"}
+xref: ICD9:046.19 {source="MONDO:relatedTo", source="i2s"}
+xref: KEGG:05020 {source="MONDO:equivalentTo", source="DOID:649"}
+xref: MESH:D017096 {source="MONDO:equivalentTo", source="DOID:649"}
+xref: NCIT:C128346 {source="MONDO:equivalentTo", source="MONDO:kboom-pr-0.93/0.86/0.11"}
+xref: SCTID:230284004 {source="MONDO:equivalentTo", source="DOID:649", source="MONDO:kboom-pr-0.90/0.77/0.29"}
+is_a: MONDO:0005560 {source="DOID:649", source="linkedlifedata", source="linkedlifedata/inferred"} ! brain disease
+is_a: MONDO:0024619 {source="MESH:D017096", source="NCIT:C128346", source="linkedlifedata/inferred"} ! central nervous system infectious disorder
+property_value: closeMatch http://identifiers.org/snomedct/193172009
+property_value: closeMatch http://identifiers.org/snomedct/20484008
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0162534
+property_value: closeMatch NCIT:C27585
+property_value: exactMatch DOID:649
+property_value: exactMatch http://identifiers.org/mesh/D017096
+property_value: exactMatch http://identifiers.org/snomedct/230284004
+property_value: exactMatch NCIT:C128346
+
+[Term]
+id: MONDO:0003406
+name: sleep-wake disorder
+def: "A change from the patient's baseline sleeping pattern, in the hours slept and/or an alteration/dysfunction in the stages of sleep." [NCIT:C3376]
+comment: Editor note: consider distinguishing sleep from s/w
+synonym: "circadian dysregulation" RELATED []
+synonym: "disorder of sleep-wake cycle" EXACT []
+synonym: "disorder of sleep-wake schedule" RELATED []
+synonym: "disorder, sleep" RELATED [MESH:D012893]
+synonym: "disorder, sleep wake" RELATED [MESH:D012893]
+synonym: "disorders of the sleep-wake schedule" RELATED []
+synonym: "disorders, sleep" RELATED [MESH:D012893]
+synonym: "disorders, sleep wake" RELATED [MESH:D012893]
+synonym: "disturbances, sleep" EXACT [NCIT:C3376]
+synonym: "disturbed nyctohemeral rhythm" RELATED []
+synonym: "long sleeper syndrome" RELATED [MESH:D012893]
+synonym: "long sleeper syndromes" RELATED [MESH:D012893]
+synonym: "neurogenic tachypnea, sleep-Related" RELATED [MESH:D012893]
+synonym: "neurogenic Tachypneas, sleep-Related" RELATED [MESH:D012893]
+synonym: "non-organic sleep disorder" RELATED [DOID:535]
+synonym: "parasomnia" RELATED [NCIT:C3376]
+synonym: "phenotype, short sleep" RELATED [MESH:D012893]
+synonym: "phenotypes, short sleep" RELATED [MESH:D012893]
+synonym: "short sleep phenotype" RELATED [MESH:D012893]
+synonym: "short sleep phenotypes" RELATED [MESH:D012893]
+synonym: "short sleeper syndrome" RELATED [MESH:D012893]
+synonym: "short sleeper syndromes" RELATED [MESH:D012893]
+synonym: "sleep disorder" RELATED [MESH:D012893]
+synonym: "sleep disorders" RELATED [MESH:D012893]
+synonym: "sleep disturbance" EXACT [NCIT:C3376]
+synonym: "sleep disturbances" EXACT [NCIT:C3376]
+synonym: "sleep phenotypes, short" RELATED [MESH:D012893]
+synonym: "sleep Related neurogenic tachypnea" RELATED [MESH:D012893]
+synonym: "sleep wake disorder" EXACT [MESH:D012893]
+synonym: "sleep-Related neurogenic tachypnea" RELATED [MESH:D012893]
+synonym: "sleep-Related neurogenic Tachypneas" RELATED [MESH:D012893]
+synonym: "sleeper syndrome, long" RELATED [MESH:D012893]
+synonym: "sleeper syndrome, short" RELATED [MESH:D012893]
+synonym: "sleeper syndromes, long" RELATED [MESH:D012893]
+synonym: "sleeper syndromes, short" RELATED [MESH:D012893]
+synonym: "Subwakefullness syndrome" RELATED [MESH:D012893]
+synonym: "Subwakefullness syndromes" RELATED [MESH:D012893]
+synonym: "syndrome, long sleeper" RELATED [MESH:D012893]
+synonym: "syndrome, short sleeper" RELATED [MESH:D012893]
+synonym: "syndrome, Subwakefullness" RELATED [MESH:D012893]
+synonym: "syndromes, long sleeper" RELATED [MESH:D012893]
+synonym: "syndromes, short sleeper" RELATED [MESH:D012893]
+synonym: "syndromes, Subwakefullness" RELATED [MESH:D012893]
+synonym: "tachypnea, sleep-Related neurogenic" RELATED [MESH:D012893]
+synonym: "Tachypneas, sleep-Related neurogenic" RELATED [MESH:D012893]
+synonym: "wake disorder, sleep" RELATED [MESH:D012893]
+synonym: "wake disorders, sleep" RELATED [MESH:D012893]
+xref: DOID:535 {source="MONDO:equivalentTo"}
+xref: EFO:0008568 {source="MONDO:equivalentTo"}
+xref: ICD10:G47 {source="MONDO:equivalentTo"}
+xref: ICD9:307.4 {source="DOID:535"}
+xref: ICD9:307.40 {source="MONDO:equivalentTo", source="i2s"}
+xref: ICD9:307.49 {source="MONDO:relatedTo", source="i2s"}
+xref: MESH:D012893 {source="MONDO:equivalentTo", source="MONDO:ontobio"}
+xref: NCIT:C3376 {source="MONDO:equivalentTo", source="MONDO:kboom-pr-1.00/0.93/31.20"}
+xref: SCTID:39898005 {source="MONDO:equivalentTo"}
+is_a: MONDO:0005071 {source="EFO:0008568/inferred", source="ICD10:G47/inferred", source="MESH:D012893", source="MESH:D012893/inferred"} ! nervous system disorder
+relationship: excluded_subClassOf MONDO:0002025 {source="MESH:D012893"} ! psychiatric disorder
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0154564
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0851578
+property_value: exactMatch DOID:535
+property_value: exactMatch http://identifiers.org/mesh/D012893
+property_value: exactMatch http://identifiers.org/snomedct/39898005
+property_value: exactMatch NCIT:C3376
+
+[Term]
+id: MONDO:0005560
+name: brain disease
+def: "A disease affecting the brain or part of the brain." [EFO:0005774]
+comment: Editor note: NCIT has different classes for brain disease and encephalopathy
+synonym: "brain disease" EXACT [MONDO:patterns/location]
+synonym: "brain disease or disorder" EXACT [MONDO:design_pattern, MONDO:patterns/location]
+synonym: "disease of brain" EXACT [MONDO:patterns/location_top]
+synonym: "disease or disorder of brain" EXACT []
+synonym: "disorder of brain" EXACT [MONDO:patterns/location_top]
+synonym: "disorder of brain" RELATED [MONDO:patterns/location_top]
+synonym: "encephalopathy" NARROW [DOID:936, NCIT:C26920]
+xref: DOID:936 {source="EFO:0005774", source="MONDO:equivalentTo"}
+xref: EFO:0005774 {source="MONDO:equivalentTo"}
+xref: ICD10:G93.40 {source="DOID:936"}
+xref: ICD10:G93.9 {source="DOID:936"}
+xref: ICD9:348.3 {source="DOID:936", source="MONDO:equivalentTo", source="i2s"}
+xref: ICD9:348.30 {source="DOID:936", source="MONDO:equivalentTo", source="i2s"}
+xref: ICD9:348.8 {source="MONDO:relatedTo", source="i2s"}
+xref: ICD9:348.9 {source="DOID:936", source="MONDO:equivalentTo", source="i2s"}
+xref: MESH:D001927 {source="DOID:936", source="MONDO:equivalentTo", source="MONDO:ontobio"}
+xref: NCIT:C96413 {source="DOID:936", source="MONDO:equivalentTo"}
+xref: SCTID:81308009 {source="MONDO:kboom-pr-0.99/0.73/5.05", source="DOID:936", source="MONDO:equivalentTo"}
+xref: UMLS:C0006111 {source="MEDGEN:kboom-pr99-c99", source="DOID:936", source="MONDO:equivalentTo"}
+xref: UMLS:C0085584 {source="MEDGEN:kboom-pr99-c99", source="DOID:936", source="MONDO:equivalentTo", source="NCIT:C26920"}
+is_a: MONDO:0002602 {source="DOID:936", source="MESH:D001927", source="MONDO:Redundant", source="NCIT:C26920/inferred", source="linkedlifedata"} ! central nervous system disease
+property_value: closeMatch http://identifiers.org/snomedct/155053002
+property_value: closeMatch http://identifiers.org/snomedct/193051008
+property_value: closeMatch http://identifiers.org/snomedct/193059005
+property_value: closeMatch http://identifiers.org/snomedct/76011009
+property_value: closeMatch NCIT:C26920
+property_value: exactMatch DOID:936
+property_value: exactMatch http://identifiers.org/mesh/D001927
+property_value: exactMatch http://identifiers.org/snomedct/81308009
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0006111
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0085584
+property_value: exactMatch NCIT:C96413
+
+[Term]
+id: MONDO:0005084
+name: mental disorder
+def: "A disease that has its basis in the disruption of mental process." [MONDO:patterns/basis_in_disruption_of_process]
+synonym: "disorder of mental process" EXACT [MONDO:patterns/basis_in_disruption_of_process]
+synonym: "disorder of mental process" RELATED [MONDO:patterns/basis_in_disruption_of_process]
+synonym: "mental or behavioural disorder" EXACT [DOID:2468]
+synonym: "mental process disease" EXACT [MONDO:design_pattern]
+xref: EFO:0000677 {source="DOID:2468", source="MONDO:equivalentTo"}
+xref: ICD10:F00.F99 {source="MONDO:equivalentTo"}
+xref: ICD9:290-299.99 {source="EFO:0000677"}
+xref: ICD9:298.8 {source="DOID:2468"}
+xref: ICD9:V11.9 {source="MONDO:relatedTo", source="i2s"}
+xref: NIFSTD:birnlex_12669 {source="EFO:0000677"}
+xref: SCTID:74732009 {source="MONDO:equivalentTo", source="EFO:0000677"}
+xref: UMLS:CN240636 {source="MONDO:equivalentTo"}
+is_a: MONDO:0002025 ! psychiatric disorder
+is_a: MONDO:0005560 ! brain disease
+disjoint_from: MONDO:0005404 {source="MONDO:cjm"} ! myalgic encephalomeyelitis/chronic fatigue syndrome
+property_value: closeMatch http://identifiers.org/mesh/D011618
+property_value: closeMatch http://identifiers.org/snomedct/5464005
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0029516
+property_value: exactMatch http://identifiers.org/snomedct/74732009
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/CN240636
+
+[Term]
+id: MONDO:0013600
+name: insomnia (disease)
+def: "A sleep disorder characterized by difficulty in falling asleep and/or remaining asleep." [NCIT:P378]
+synonym: "delayed sleep phase disorder, susceptibility to" RELATED [OMIM:614163]
+synonym: "delayed sleep phase disorder, susceptibility to; DSPD" RELATED [OMIM:614163]
+synonym: "delayed sleep phase syndrome, susceptibility to" RELATED [MONDO:Lexical, OMIM:614163]
+synonym: "delayed sleep phase syndrome, susceptibility to; DSPS" RELATED [OMIM:614163]
+synonym: "DSPD" RELATED [OMIM:614163]
+synonym: "DSPS" RELATED [MONDO:Lexical, OMIM:614163]
+synonym: "insomnia" EXACT [MONDO:ambiguous]
+xref: EFO:0004698 {source="MONDO:equivalentTo"}
+xref: HP:0100785 {source="EFO:0004698", source="MONDO:otherHierarchy", source="ontobio"}
+xref: ICD10:G47.0 {source="MONDO:equivalentTo"}
+xref: ICD9:780.52 {source="MONDO:equivalentTo", source="i2s"}
+xref: MESH:D007319 {source="MONDO:equivalentTo", source="MONDO:ontobio"}
+xref: NCIT:C28286 {source="MONDO:kboom-pr-1.00/0.84/13.84", source="EFO:0004698", source="MONDO:equivalentTo"}
+xref: OMIM:614163 {source="EFO:0004698", source="MONDO:equivalentTo"}
+xref: SCTID:193462001 {source="EFO:0004698", source="MONDO:equivalentTo", source="MONDO:kboom-pr-1.00/0.84/14.11"}
+is_a: MONDO:0003406 {source="EFO:0004698", source="ICD10:G47.0", source="MESH:D007319/inferred", source="NCIT:C28286", source="linkedlifedata/inferred"} ! sleep-wake disorder
+is_a: MONDO:0005084 {source="EFO:0004698", source="EFO:0004698/inferred"} ! mental disorder
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0917801
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C3279991
+property_value: exactMatch http://identifiers.org/mesh/D007319
+property_value: exactMatch http://identifiers.org/omim/614163
+property_value: exactMatch http://identifiers.org/snomedct/193462001
+property_value: exactMatch NCIT:C28286
+
+[Term]
+id: MONDO:0024237
+name: inherited neurodegenerative disorder
+def: "An inherited disorder characterized by progressive degeneration and atrophy of the nervous system." [NCIT:C97073]
+subset: ordo_group_of_disorders {source="Orphanet:183500"}
+synonym: "genetic neurodegenerative disease" EXACT [MONDO:0015952, MONDO:patterns/genetic]
+synonym: "hereditary neurodegenerative disease" EXACT [MONDO:patterns/hereditary]
+synonym: "hereditary neurodegenerative disorder" EXACT [NCIT:C97073]
+xref: MESH:D020271 {source="MONDO:equivalentTo"}
+xref: NCIT:C97073 {source="MONDO:equivalentTo"}
+xref: Orphanet:183500 {source="MONDO:equivalentTo"}
+xref: UMLS:C3273225 {source="NCIT:C97073", source="MONDO:equivalentTo"}
+xref: UMLS:CN200549 {source="MEDGEN:kboom-pr98-c99", source="MONDO:equivalentTo"}
+is_a: MONDO:0005559 {source="MESH:D020271", source="MONDO:Redundant", source="NCIT:C97073", source="indirect"} ! neurodegenerative disease
+is_a: MONDO:0019117 {source="MONDO:Redundant", source="Orphanet:183500"} ! genetic nervous system disorder
+intersection_of: MONDO:0005559 ! neurodegenerative disease
+intersection_of: has_modifier MONDO:0021152 ! inherited
+relationship: excluded_subClassOf MONDO:0002320 {source="NCIT:C97073"} ! congenital nervous system disorder
+property_value: exactMatch http://identifiers.org/mesh/D020271
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C3273225
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/CN200549
+property_value: exactMatch NCIT:C97073
+property_value: exactMatch Orphanet:183500
+
+[Term]
+id: MONDO:0002602
+name: central nervous system disease
+def: "A disease involving the central nervous system." [MONDO:DesignPattern]
+synonym: "central nervous disease" EXACT [DOID:331]
+synonym: "central nervous system disease" EXACT [MONDO:patterns/location, NCIT:C2934]
+synonym: "central nervous system disease or disorder" EXACT [MONDO:design_pattern, MONDO:patterns/location]
+synonym: "central nervous system disorder" EXACT [NCIT:C2934]
+synonym: "disease of central nervous system" EXACT [MONDO:patterns/location_top]
+synonym: "disease or disorder of central nervous system" EXACT []
+synonym: "disorder of central nervous system" EXACT [MONDO:patterns/location_top, NCIT:C2934]
+synonym: "disorder of central nervous system" RELATED [MONDO:patterns/location_top]
+xref: DOID:331 {source="MONDO:equivalentTo"}
+xref: ICD10:G96.9 {source="DOID:331"}
+xref: MESH:D002493 {source="MONDO:equivalentTo", source="DOID:331"}
+xref: NCIT:C2934 {source="MONDO:equivalentTo", source="DOID:331", source="MONDO:kboom-pr-1.00/0.92/29.66"}
+xref: SCTID:23853001 {source="MONDO:equivalentTo", source="DOID:331"}
+xref: UMLS:C0007682 {source="NCIT:C2934", source="MONDO:equivalentTo", source="DOID:331"}
+is_a: MONDO:0005071 {source="DOID:331", source="MESH:D002493", source="MONDO:Redundant", source="NCIT:C2934", source="linkedlifedata"} ! nervous system disorder
+property_value: closeMatch http://identifiers.org/snomedct/138748005
+property_value: closeMatch http://identifiers.org/snomedct/154981003
+property_value: closeMatch http://identifiers.org/snomedct/155049004
+property_value: closeMatch http://identifiers.org/snomedct/155059003
+property_value: closeMatch http://identifiers.org/snomedct/192641002
+property_value: closeMatch http://identifiers.org/snomedct/193076009
+property_value: closeMatch http://identifiers.org/snomedct/194566008
+property_value: closeMatch http://identifiers.org/snomedct/267144009
+property_value: closeMatch http://identifiers.org/snomedct/267679005
+property_value: closeMatch http://identifiers.org/snomedct/267700003
+property_value: closeMatch http://identifiers.org/snomedct/267702006
+property_value: closeMatch http://identifiers.org/snomedct/275539005
+property_value: exactMatch DOID:331
+property_value: exactMatch http://identifiers.org/mesh/D002493
+property_value: exactMatch http://identifiers.org/snomedct/23853001
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0007682
+property_value: exactMatch NCIT:C2934
+
+[Term]
+id: MONDO:0024236
+name: degenerative disorder
+def: "A disorder characterized by the progressive loss of function and/or structure of the affected tissues." [NCIT:C27090]
+synonym: "degenerative disease" EXACT [NCIT:C27090]
+synonym: "degenerative disorder" EXACT [NCIT:C27090]
+xref: ICD9:796.4 {source="MONDO:relatedTo", source="i2s"}
+xref: NCIT:C27090 {source="MONDO:equivalentTo"}
+xref: SCTID:362975008 {source="MONDO:equivalentTo"}
+xref: UMLS:C1285162 {source="MEDGEN:kboom-pr98-c99", source="MONDO:equivalentTo", source="NCIT:C27090"}
+is_a: MONDO:0000001 {source="NCIT:C27090/inferred", source="linkedlifedata"} ! disease or disorder
+property_value: exactMatch http://identifiers.org/snomedct/362975008
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C1285162
+property_value: exactMatch NCIT:C27090
+
+[Term]
+id: MONDO:0005559
+name: neurodegenerative disease
+def: "A disorder of the central nervous system characterized by gradual and progressive loss of neural tissue and neurologic function." [NCIT:C4802]
+comment: Editor notes: DO treats this as two diseases
+subset: merged_class
+synonym: "brain degeneration" EXACT [DOID:1443]
+synonym: "central nervous system degenerative disorder" EXACT [MONDO:patterns/location, NCIT:C4802]
+synonym: "central nervous system neurodegenerative disorder" EXACT [NCIT:C4802]
+synonym: "cerebral degeneration disease" NARROW [MONDO:0001963]
+synonym: "degenerative disease" BROAD [DOID:1289]
+synonym: "degenerative disorder of central nervous system" EXACT [MONDO:design_pattern]
+synonym: "neurodegenerative disease" EXACT [DOID:1289, NCIT:C4802]
+xref: DOID:1289 {source="EFO:0005772", source="MONDO:equivalentTo"}
+xref: EFO:0005772 {source="MONDO:equivalentTo"}
+xref: ICD10:G31.9 {source="DOID:1289"}
+xref: ICD9:349.89 {source="MONDO:relatedTo", source="i2s"}
+xref: MESH:D019636 {source="EFO:0005772", source="DOID:1289", source="MONDO:equivalentTo", source="MONDO:ontobio"}
+xref: NCIT:C4802 {source="EFO:0005772", source="MONDO:equivalentTo"}
+xref: SCTID:80690008 {source="MONDO:equivalentTo"}
+is_a: MONDO:0002602 ! central nervous system disease
+is_a: MONDO:0024236 {source="MONDO:Redundant", source="MONDOLEX:0005559", source="NCIT:C4802", source="linkedlifedata"} ! degenerative disorder
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0270715
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0524851
+property_value: exactMatch DOID:1289
+property_value: exactMatch http://identifiers.org/mesh/D019636
+property_value: exactMatch http://identifiers.org/snomedct/80690008
+property_value: exactMatch NCIT:C4802
+
+[Term]
+id: MONDO:0020136
+name: neurodegenerative disease with dementia
+subset: ordo_group_of_disorders {source="Orphanet:98534"}
+xref: Orphanet:98534 {source="MONDO:equivalentTo"}
+xref: UMLS:CN207020 {source="MEDGEN:kboom-pr98-c99", source="MONDO:equivalentTo"}
+is_a: MONDO:0001627 {source="Orphanet:98534"} ! dementia
+is_a: MONDO:0005559 {source="Orphanet:98534"} ! neurodegenerative disease
+relationship: has_modifier MONDO:0021136 {source="MONDO:0015918", source="MONDO:0019515"} ! rare
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/CN207020
+property_value: exactMatch Orphanet:98534
+
+[Term]
+id: MONDO:0018926
+name: human prion disease
+def: "5%) include iatrogenic CJD and variant CJD (vCDJ)." [Orphanet:56970]
+subset: ordo_group_of_disorders {source="Orphanet:56970"}
+synonym: "transmissible spongiform encephalopathy" EXACT [Orphanet:56970]
+synonym: "TSE" EXACT [Orphanet:56970]
+xref: ICD10:A81.0 {source="ORDO:56970/btnt", source="Orphanet:56970"}
+xref: ICD10:A81.1 {source="ORDO:56970/btnt", source="MONDO:relatedTo", source="Orphanet:56970"}
+xref: ICD10:A81.8 {source="ORDO:56970/btnt", source="Orphanet:56970"}
+xref: ICD10:A81.9 {source="ORDO:56970/btnt", source="Orphanet:56970"}
+xref: Orphanet:56970 {source="MONDO:equivalentTo"}
+is_a: MONDO:0020136 {source="Orphanet:56970"} ! neurodegenerative disease with dementia
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0162534
+property_value: exactMatch Orphanet:56970
+
+[Term]
+id: MONDO:0005550
+name: infectious disease
+def: "A disorder resulting from the presence and activity of a microbial, viral, or parasitic agent. It can be transmitted by direct or indirect contact." [NCIT:C26726]
+comment: Replaces 'infection' in disease hierarchy. OBI imported term infection is moved to pathologic process. This class is a container class for infectious diseases, not the process of infection itself. {source="EFO:0005741"}
+synonym: "clinical infection" EXACT [NCIT:C26726]
+synonym: "disease by infectious agent" RELATED [DOID:0050117]
+synonym: "ID" EXACT [NCIT:C26726]
+synonym: "infection" EXACT [NCIT:C26726]
+synonym: "infectious" EXACT [NCIT:C26726]
+synonym: "infectious disease" EXACT [DOID:0050117, NCIT:C26726]
+synonym: "infectious diseases and manifestations" EXACT [NCIT:C26726]
+synonym: "infectious disorder" EXACT [NCIT:C26726]
+synonym: "root caused disease or disorder" EXACT [MONDO:patterns/specific_infectious_disease_by_agent]
+synonym: "root disease or disorder" EXACT []
+synonym: "root infectious disease" EXACT []
+xref: DOID:0050117 {source="EFO:0005741", source="MONDO:equivalentTo"}
+xref: EFO:0005741 {source="MONDO:equivalentTo"}
+xref: ICD10:A00.B99 {source="some infections are in other chapters", source="MONDO:superClassOf"}
+xref: ICD9:079.0 {source="DOID:0050117"}
+xref: ICD9:136.8 {source="MONDO:relatedTo", source="i2s"}
+xref: ICD9:136.9 {source="MONDO:relatedTo", source="i2s"}
+xref: IDO:0000436 {source="EFO:0005741"}
+xref: MESH:D003141 {source="MONDO:equivalentTo", source="MONDO:ontobio"}
+xref: NCIT:C26726 {source="MONDO:equivalentTo"}
+xref: SCTID:40733004 {source="MONDO:kboom-pr-0.92/0.81/0.38", source="EFO:0005741", source="MONDO:equivalentTo"}
+is_a: MONDO:0000001 ! disease or disorder
+disjoint_from: MONDO:0019751 ! autoinflammatory syndrome
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0001485
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0009450
+property_value: exactMatch DOID:0050117
+property_value: exactMatch http://identifiers.org/mesh/D003141
+property_value: exactMatch http://identifiers.org/snomedct/40733004
+property_value: exactMatch NCIT:C26726
+
+[Term]
+id: MONDO:0020141
+name: infectious disease with dementia
+subset: ordo_group_of_disorders {source="Orphanet:98542"}
+xref: Orphanet:98542 {source="MONDO:equivalentTo"}
+xref: UMLS:CN207022 {source="MEDGEN:kboom-pr98-c99", source="MONDO:equivalentTo"}
+is_a: MONDO:0001627 {source="Orphanet:98542"} ! dementia
+is_a: MONDO:0005550 ! infectious disease
+relationship: has_modifier MONDO:0021136 {source="MONDO:0019515"} ! rare
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/CN207022
+property_value: exactMatch Orphanet:98542
+
+[Term]
+id: MONDO:0002025
+name: psychiatric disorder
+def: "A disorder characterized by behavioral and/or psychological abnormalities, often accompanied by physical symptoms. The symptoms may cause clinically significant distress or impairment in social and occupational areas of functioning. Representative examples include anxiety disorders, cognitive disorders, mood disorders and schizophrenia." [NCIT:C2893]
+synonym: "disease of mental health" EXACT [DOID:150]
+synonym: "mental disorder" EXACT [NCIT:C2893]
+synonym: "mental dysfunction" EXACT [NCIT:C2893]
+synonym: "mental illness" EXACT [NCIT:C2893]
+synonym: "Psychiatric disease" EXACT [NCIT:C2893]
+synonym: "Psychiatric disorder" EXACT [NCIT:C2893]
+xref: DOID:150 {source="MONDO:equivalentTo"}
+xref: ICD10:F99 {source="DOID:150"}
+xref: ICD10:F99-F99 {source="DOID:150"}
+xref: MESH:D001523 {source="DOID:150", source="MONDO:equivalentTo"}
+xref: MFOMD:0000004
+xref: NCIT:C2893 {source="DOID:150", source="MONDO:equivalentTo"}
+is_a: MONDO:0000001 ! disease or disorder
+property_value: closeMatch http://identifiers.org/snomedct/154843007
+property_value: closeMatch http://identifiers.org/snomedct/154971002
+property_value: closeMatch http://identifiers.org/snomedct/154972009
+property_value: closeMatch http://identifiers.org/snomedct/154980002
+property_value: closeMatch http://identifiers.org/snomedct/192637001
+property_value: closeMatch http://identifiers.org/snomedct/192639003
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0004936
+property_value: exactMatch DOID:150
+property_value: exactMatch http://identifiers.org/mesh/D001523
+property_value: exactMatch NCIT:C2893
+
+[Term]
+id: MONDO:0002039
+name: cognitive disorder
+def: "A disease affects cognitive processes." [MONDO:DesignPattern]
+synonym: "cognitive disease" EXACT [DOID:1561]
+synonym: "cognitive disorder" EXACT [NCIT:C92196]
+synonym: "organic mental disorder" RELATED [DOID:1561, NCIT:C34870]
+xref: COHD:374009 {source="MONDO:equivalentTo"}
+xref: DOID:1561 {source="MONDO:equivalentTo"}
+xref: EFO:1001457 {source="MONDO:equivalentTo"}
+xref: ICD10:F09 {source="DOID:1561"}
+xref: ICD9:294.9 {source="MONDO:relatedTo", source="i2s"}
+xref: MESH:D019965 {source="DOID:1561", source="MONDO:equivalentTo", source="MONDO:ontobio"}
+xref: NCIT:C92196 {source="MONDO:equivalentTo", source="exact-label-match"}
+xref: SCTID:443265004 {source="MONDO:equivalentTo", source="MONDO:kboom-pr-0.88/0.75/0.07"}
+is_a: MONDO:0002025 {source="MESH:D019965", source="MONDO:Redundant", source="NCIT:C92196", source="OWLReasoner:2017"} ! psychiatric disorder
+property_value: closeMatch http://identifiers.org/snomedct/106014008
+property_value: closeMatch http://identifiers.org/snomedct/111479008
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0009241
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0029227
+property_value: closeMatch NCIT:C34870
+property_value: exactMatch DOID:1561
+property_value: exactMatch http://identifiers.org/mesh/D019965
+property_value: exactMatch http://identifiers.org/snomedct/443265004
+property_value: exactMatch NCIT:C92196
+
+[Term]
+id: MONDO:0001627
+name: dementia
+def: "Loss of intellectual abilities interfering with an individual's social and occupational functions. Causes include Alzheimer's disease, brain injuries, brain tumors, and vascular disorders." [NCIT:P378]
+synonym: "dementia" EXACT [NCIT:C4786]
+xref: COHD:4182210 {source="MONDO:equivalentTo"}
+xref: DOID:1307 {source="MONDO:equivalentTo"}
+xref: GARD:0011946 {source="MONDO:equivalentTo"}
+xref: ICD9:290.8 {source="DOID:1307"}
+xref: ICD9:294.1 {source="MONDO:equivalentTo", source="i2s"}
+xref: ICD9:294.8 {source="MONDO:relatedTo", source="i2s"}
+xref: MESH:D003704 {source="MONDO:equivalentTo", source="MONDO:ontobio"}
+xref: NCIT:C4786 {source="MONDO:equivalentTo", source="exact-label-match"}
+xref: SCTID:52448006 {source="MONDO:kboom-pr-1.00/0.84/14.53", source="MONDO:equivalentTo"}
+is_a: MONDO:0002039 {source="DOID:1307", source="MESH:D003704", source="MONDO:Redundant", source="NCIT:C4786"} ! cognitive disorder
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0154319
+property_value: closeMatch http://linkedlifedata.com/resource/umls/id/C0497327
+property_value: exactMatch DOID:1307
+property_value: exactMatch http://identifiers.org/mesh/D003704
+property_value: exactMatch http://identifiers.org/snomedct/52448006
+property_value: exactMatch NCIT:C4786
+
+[Term]
+id: MONDO:0015547
+name: genetic dementia
+def: "Genetic dementia." []
+subset: ordo_group_of_disorders {source="Orphanet:158124"}
+synonym: "genetic dementia" EXACT [MONDO:patterns/genetic]
+xref: Orphanet:158124 {source="MONDO:equivalentTo"}
+is_a: MONDO:0001627 ! dementia
+is_a: MONDO:0019117 {source="MONDO:Redundant", source="Orphanet:158124"} ! genetic nervous system disorder
+intersection_of: MONDO:0001627 ! dementia
+intersection_of: has_modifier MONDO:0021152 ! inherited
+property_value: exactMatch Orphanet:158124
+
+[Term]
+id: MONDO:0003847
+name: inherited genetic disease
+def: "A disease that is caused by genetic modifications where those modifications are inherited from a parent's genome." [MONDO:cjm]
+comment: Usage note: this is intended only for diseases with an inherited genetic etiology. Somatic genetic mutations are excluded. Some ontologies use the term 'genetic disease'
+ in the sense of inherited disorders only, we are here careful to distinguish.
+synonym: "familial disorder" RELATED []
+synonym: "genetic condition" BROAD [NCIT:C3101]
+synonym: "genetic condition" EXACT [NCIT:C3101]
+synonym: "genetic disease" BROAD []
+synonym: "genetic disorder" BROAD [NCIT:C3101]
+synonym: "genetic disorder" EXACT [NCIT:C3101]
+synonym: "hereditary disease" EXACT [MONDO:patterns/hereditary, NCIT:C3101]
+synonym: "hereditary disease or disorder" EXACT [MONDO:patterns/hereditary]
+synonym: "hereditary diseases" EXACT [NCIT:C3101]
+synonym: "inborn disorder" RELATED []
+synonym: "inherited disease" EXACT [NCIT:C3101]
+synonym: "molecular disease" EXACT [NCIT:C3101]
+xref: DOID:630 {source="MONDO:equivalentTo"}
+xref: EFO:0000508 {source="MONDO:equivalentTo"}
+xref: ICD9:799.89 {source="MONDO:relatedTo", source="i2s"}
+xref: MESH:D030342 {source="EFO:0000508", source="MONDO:equivalentTo", source="DOID:630"}
+xref: NCIT:C3101 {source="EFO:0000508", source="MONDO:equivalentTo", source="DOID:630"}
+xref: SCTID:32895009 {source="MONDO:equivalentTo", source="DOID:630"}
+xref: UMLS:C0019247 {source="EFO:0000508", source="MONDO:equivalentTo", source="NCIT:C3101", source="DOID:630"}
+is_a: MONDO:0000001 {source="DOID:630", source="EFO:0000508", source="MONDO:Redundant", source="NCIT:C3101", source="linkedlifedata"} ! disease or disorder
+intersection_of: MONDO:0000001 ! disease or disorder
+intersection_of: has_modifier MONDO:0021152 ! inherited
+disjoint_from: MONDO:0016592 ! non-hereditary degenerative ataxia
+relationship: has_modifier MONDO:0021152 ! inherited
+property_value: closeMatch http://identifiers.org/snomedct/264530000
+property_value: exactMatch DOID:630
+property_value: exactMatch http://identifiers.org/mesh/D030342
+property_value: exactMatch http://identifiers.org/snomedct/32895009
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0019247
+property_value: exactMatch NCIT:C3101
+
+[Term]
+id: MONDO:0021199
+name: disease by anatomical system
+def: "A disease that disrupts the functioning of an organ system." [MONDO:cjm]
+subset: metaclass
+synonym: "anatomical system disease" EXACT [MONDO:patterns/location]
+synonym: "disease of anatomical entity" RELATED [DOID:7]
+synonym: "disease of anatomical system" EXACT [MONDO:patterns/location_top]
+synonym: "disorder of anatomical system" RELATED [MONDO:patterns/location_top]
+xref: DOID:7 {source="MONDO:equivalentTo"}
+xref: ICD9:796.4 {source="MONDO:relatedTo", source="i2s"}
+xref: SCTID:362965005 {source="MONDO:equivalentTo"}
+xref: UMLS:C1285159 {source="MONDO:equivalentTo"}
+is_a: MONDO:0000001 {source="DOID:7", source="MONDO:Entailed", source="linkedlifedata", source="linkedlifedata/inferred"} ! disease or disorder
+property_value: exactMatch DOID:7
+property_value: exactMatch http://identifiers.org/snomedct/362965005
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C1285159
+
+[Term]
+id: MONDO:0005071
+name: nervous system disorder
+def: "A non-neoplastic or neoplastic disorder that affects the brain, spinal cord, or peripheral nerves." [NCIT:C26835]
+synonym: "disease of nervous system" EXACT [MONDO:patterns/location_top]
+synonym: "disease or disorder of nervous system" EXACT []
+synonym: "disorder of nervous system" EXACT [MONDO:patterns/location_top, NCIT:C26835]
+synonym: "disorder of nervous system" RELATED [MONDO:patterns/location_top, NCIT:C26835]
+synonym: "nervous system disease" EXACT [MONDO:patterns/location]
+synonym: "nervous system disease or disorder" EXACT [MONDO:design_pattern, MONDO:patterns/location]
+synonym: "nervous system disorder" EXACT [NCIT:C26835]
+synonym: "neurologic disease" EXACT [DOID:863]
+synonym: "neurologic disorder" EXACT [DOID:863, NCIT:C26835]
+synonym: "neurological disease" EXACT [DOID:863]
+synonym: "neurological disorder" EXACT [DOID:863]
+xref: DOID:863 {source="EFO:0000618", source="MONDO:equivalentTo"}
+xref: EFO:0000618 {source="MONDO:equivalentTo"}
+xref: ICD10:G00-G99 {source="DOID:863"}
+xref: ICD10:G00.G99 {source="MONDO:equivalentTo"}
+xref: ICD10:G98 {source="DOID:863"}
+xref: ICD10:G98.8 {source="DOID:863"}
+xref: ICD9:349.89 {source="MONDO:relatedTo", source="i2s"}
+xref: ICD9:349.9 {source="DOID:863", source="MONDO:equivalentTo", source="i2s"}
+xref: MESH:D009422 {source="DOID:863", source="MONDO:equivalentTo", source="MONDO:ontobio"}
+xref: NCIT:C26835 {source="DOID:863", source="MONDO:equivalentTo", source="NCIT:C26835"}
+xref: SCTID:118940003 {source="DOID:863", source="MONDO:equivalentTo"}
+xref: UMLS:C0027765 {source="DOID:863", source="MONDO:equivalentTo", source="NCIT:C26835"}
+xref: Wikipedia:Nervous_system_disease {source="EFO:0000618"}
+is_a: MONDO:0021199 {source="DOID:863", source="MONDO:Entailed", source="MONDO:metaclass", source="linkedlifedata"} ! disease by anatomical system
+property_value: closeMatch http://identifiers.org/snomedct/154981003
+property_value: closeMatch http://identifiers.org/snomedct/155262005
+property_value: closeMatch http://identifiers.org/snomedct/192641002
+property_value: closeMatch http://identifiers.org/snomedct/267679005
+property_value: closeMatch http://identifiers.org/snomedct/286946008
+property_value: exactMatch DOID:863
+property_value: exactMatch http://identifiers.org/mesh/D009422
+property_value: exactMatch http://identifiers.org/snomedct/118940003
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0027765
+property_value: exactMatch NCIT:C26835
+
+[Term]
+id: MONDO:0019117
+name: genetic nervous system disorder
+def: "An instance of nervous system disease that is caused by a modification of the individual's genome." [MONDO:patterns/genetic]
+subset: ordo_group_of_disorders {source="Orphanet:71859"}
+synonym: "genetic nervous system disorder" EXACT [MONDO:patterns/genetic]
+synonym: "genetic neurological disorder" EXACT [MONDO:cjm]
+synonym: "rare genetic neurological disorder" EXACT [Orphanet:71859]
+xref: Orphanet:71859 {source="MONDO:equivalentTo"}
+xref: UMLS:CN205639 {source="MONDO:equivalentTo", source="MEDGEN:kboom-pr87-c94"}
+is_a: MONDO:0003847 ! inherited genetic disease
+is_a: MONDO:0005071 ! nervous system disorder
+intersection_of: MONDO:0005071 ! nervous system disorder
+intersection_of: has_modifier MONDO:0021152 ! inherited
+relationship: has_modifier MONDO:0021136 {source="MONDO:0021198", source="Orphanet:71859"} ! rare
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/CN205639
+property_value: exactMatch Orphanet:71859
+
+[Term]
+id: MONDO:0021037
+name: genetic neurodegenerative disease with dementia
+def: "An instance of neurodegenerative disease with dementia that is caused by a modification of the individual's genome." [MONDO:patterns/genetic]
+synonym: "genetic neurodegenerative disease with dementia" EXACT [MONDO:patterns/genetic]
+xref: Orphanet:276058 {source="MONDO:0021037", source="MONDO:equivalentTo"}
+xref: UMLS:CN202589 {source="MEDGEN:kboom-pr98-c99", source="MONDO:equivalentTo"}
+is_a: MONDO:0015547 {source="MONDO:Redundant", source="Orphanet:276058"} ! genetic dementia
+is_a: MONDO:0020136 ! neurodegenerative disease with dementia
+is_a: MONDO:0024237 {source="MONDO:Redundant", source="Orphanet:276058"} ! inherited neurodegenerative disorder
+intersection_of: MONDO:0020136 ! neurodegenerative disease with dementia
+intersection_of: has_modifier MONDO:0021152 ! inherited
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/CN202589
+property_value: exactMatch Orphanet:276058
+
+[Term]
+id: MONDO:0017234
+name: inherited prion disease
+def: "An instance of prion disease that is caused by an inherited modification of the individual's genome." [MONDO:patterns/hereditary]
+subset: ordo_group_of_disorders {source="Orphanet:280400"}
+synonym: "familial prion disease" EXACT [Orphanet:280400]
+synonym: "hereditary prion disease" EXACT [MONDO:patterns/hereditary]
+xref: ICD10:A81.8 {source="ORDO:280400/attributed", source="ORDO:280400/ntbt", source="Orphanet:280400"}
+xref: Orphanet:280400 {source="MONDO:equivalentTo"}
+xref: UMLS:CN202725 {source="MONDO:equivalentTo", source="MEDGEN:kboom-pr87-c94"}
+is_a: MONDO:0005429 ! prion disease
+is_a: MONDO:0018926 {source="Orphanet:280400"} ! human prion disease
+is_a: MONDO:0020141 ! infectious disease with dementia
+is_a: MONDO:0021037 {source="MONDO:Redundant", source="OWLReasoner:2017", source="Orphanet:280400"} ! genetic neurodegenerative disease with dementia
+intersection_of: MONDO:0005429 ! prion disease
+intersection_of: has_modifier MONDO:0021152 ! inherited
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/CN202725
+property_value: exactMatch Orphanet:280400
+
+[Term]
+id: MONDO:0010808
+name: fatal familial insomnia
+def: "Fatal familial insomnia (FFI) is a very rare form of prion disease (see this term) characterized by subacute onset of insomnia showing as a reduced overall sleep time, autonomic dysfunction, and motor disturbances." [Orphanet:466]
+subset: gard_rare {source="GARD:0006429"}
+subset: ordo_disease {source="Orphanet:466"}
+synonym: "familial fatal insomnia" RELATED [GARD:0006429]
+synonym: "fatal familial insomnia" EXACT [MONDO:Lexical, OMIM:600072]
+synonym: "fatal familial INSOMNIA; FFI" RELATED [OMIM:600072]
+synonym: "FFI" RELATED [MONDO:Lexical, OMIM:600072]
+synonym: "Insomnia familial fatal" RELATED [GARD:0006429]
+synonym: "Insomnia, fatal familial" RELATED [OMIM:600072]
+xref: DOID:0050433 {source="MONDO:equivalentTo"}
+xref: GARD:0006429 {source="MONDO:equivalentTo"}
+xref: ICD10:A81.8 {source="Orphanet:466", source="ORDO:466/attributed", source="ORDO:466/ntbt"}
+xref: ICD10:A81.83 {source="DOID:0050433", source="MONDO:equivalentTo"}
+xref: ICD9:046.72 {source="DOID:0050433"}
+xref: MedDRA:10072077 {source="Orphanet:466", source="ORDO:466/e"}
+xref: MESH:D034062 {source="Orphanet:466", source="DOID:0050433", source="MONDO:equivalentTo", source="MONDO:ontobio", source="ORDO:466/e"}
+xref: NCIT:C84711 {source="DOID:0050433", source="MONDO:equivalentTo", source="MONDO:kboom-pr-1.00/0.92/31.20"}
+xref: OMIM:600072 {source="Orphanet:466", source="DOID:0050433", source="MONDO:equivalentTo", source="ORDO:466/e"}
+xref: Orphanet:466 {source="MONDO:equivalentTo", source="OMIM:600072"}
+xref: SCTID:83157008 {source="DOID:0050433", source="MONDO:equivalentTo", source="MONDO:kboom-pr-1.00/0.91/29.66"}
+xref: UMLS:C0206042 {source="NCIT:C84711", source="Orphanet:466", source="DOID:0050433", source="NCBI:mim2gene_medline", source="MONDO:equivalentTo", source="ORDO:466/e", source="OMIM:600072"}
+is_a: MONDO:0013600 {source="MESH:D034062", source="NCIT:C84711", source="linkedlifedata"} ! insomnia (disease)
+is_a: MONDO:0017234 {source="Orphanet:466"} ! inherited prion disease
+property_value: exactMatch DOID:0050433
+property_value: exactMatch http://identifiers.org/meddra/10072077
+property_value: exactMatch http://identifiers.org/mesh/D034062
+property_value: exactMatch http://identifiers.org/omim/600072
+property_value: exactMatch http://identifiers.org/snomedct/83157008
+property_value: exactMatch http://linkedlifedata.com/resource/umls/id/C0206042
+property_value: exactMatch NCIT:C84711
+property_value: exactMatch Orphanet:466
+property_value: seeAlso https://rarediseases.info.nih.gov/diseases/6429/fatal-familial-insomnia xsd:anyURI {source="GARD:0006429"}

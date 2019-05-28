@@ -22,45 +22,38 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.phenotips</groupId>
-    <artifactId>phenotips-components</artifactId>
+    <artifactId>vocabulary-mondo</artifactId>
     <version>1.3-SNAPSHOT</version>
   </parent>
-  <artifactId>vocabularies</artifactId>
-  <packaging>pom</packaging>
-  <name>PhenoTips - Vocabularies</name>
+  <artifactId>vocabulary-mondo-ui</artifactId>
+  <name>PhenoTips - Vocabularies - Mondo Disease Ontology integration - Documents providing services</name>
+  <packaging>xar</packaging>
 
-  <modules>
-    <module>api</module>
-    <module>translations</module>
-    <module>ui</module>
-    <module>hpo</module>
-    <module>omim</module>
-    <module>rest</module>
-    <module>hgnc</module>
-    <module>hgnc-remote</module>
-    <module>chebi</module>
-    <module>ethnicity</module>
-    <module>ordo</module>
-    <module>mondo</module>
-  </modules>
+  <properties>
+    <!-- Don't run CLIRR here since there's no Java code. -->
+    <xwiki.clirr.skip>true</xwiki.clirr.skip>
+    <!-- Name to display by the Extension Manager -->
+    <xwiki.extension.name>Mondo Disease Ontology integration</xwiki.extension.name>
+  </properties>
 
-  <build>
-    <resources>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-        <!-- Filter solrcore.properties -->
-        <filtering>true</filtering>
-        <includes>
-          <include>**/solrcore.properties</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-        <filtering>false</filtering>
-        <excludes>
-          <exclude>**/solrcore.properties</exclude>
-        </excludes>
-      </resource>
-    </resources>
-  </build>
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>vocabulary-mondo-api</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-rendering-macro-velocity</artifactId>
+      <version>${xwiki.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.rendering</groupId>
+      <artifactId>xwiki-rendering-macro-html</artifactId>
+      <version>${xwiki.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
 </project>
