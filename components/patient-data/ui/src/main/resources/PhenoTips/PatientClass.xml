@@ -930,7 +930,11 @@
     <omim_id>
       <cache>0</cache>
       <classname/>
-      <customDisplay>{{include reference="PhenoTips.OmimDisplay" /}}</customDisplay>
+      <customDisplay>{{include reference="PhenoTips.DiagnosisTermMacros" /}}
+
+{{velocity}}
+#__displayDiagnosisTerms('mondo' $value)
+{{/velocity}}</customDisplay>
       <disabled>0</disabled>
       <displayType>input</displayType>
       <idField/>

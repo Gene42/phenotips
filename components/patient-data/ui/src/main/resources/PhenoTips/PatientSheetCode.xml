@@ -607,6 +607,23 @@ document.observe('xwiki:dom:loaded', function()
             fadeOnClear : false,
             timeout : 30000,
             parentContainer : null
+        },
+        "mondo" : {
+            script: new XWiki.Document('SolrService', 'PhenoTips').getURL("get", "vocabulary=mondo") + "&amp;",
+            varname: "q",
+            noresults: "No matching terms",
+            json: true,
+            resultsParameter : "rows",
+            resultId : "id",
+            resultValue : "name",
+            resultAltName: "synonym",
+            resultInfo : {},
+            tooltip: 'mondo-disease-info',
+            enableHierarchy: true,
+            resultParent : "is_a",
+            fadeOnClear : false,
+            timeout : 30000,
+            parentContainer : null
         }
     };
     var pickerSpecialClassOptions = {
@@ -3817,7 +3834,12 @@ h1, h2, h3, h4 {
 
 .vocabulary-term-list .term-id {
   font-family: monospace;
-  white-space: pre;
+  white-space: nowrap;
+  padding-left: 0.5em;
+}
+
+.vocabulary-term-list &gt; .vocabulary-term {
+  margin-bottom: 0.3em;
 }</code>
     </property>
     <property>

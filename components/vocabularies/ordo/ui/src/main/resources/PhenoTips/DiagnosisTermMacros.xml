@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+
+<xwikidoc version="1.1">
+  <web>PhenoTips</web>
+  <name>DiagnosisTermMacros</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1559003150000</creationDate>
+  <parent>PhenoTips.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1559060931000</date>
+  <contentUpdateDate>1559055553000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Diagnosis Term Macros</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>{{velocity output="false"}}
+#macro (__displayTerm $term)
+&lt;div class="vocabulary-term"&gt;
+  ## Resolve terminology and canonical id
+  #set ($curie = "$!{term.id}")
+  ## MIM is default if no vocabulary prefix
+  #if ($curie.indexOf(':') &lt; 0)
+    #set ($curie = "MIM:${curie}")
+  #end
+  #set ($vocabulary = $!{stringtool.substringBefore($curie, ':').toUpperCase()})
+  #set ($termId = $stringtool.substringAfter($curie, ':'))
+  #set ($displayId = $curie)
+  #set ($name = ${term.name})
+  #if ("$!{name}" == '')
+    #set ($name = $val)
+  #end
+  #set ($termUrl = "")
+  #if ("$!{vocabulary}" == 'ORDO')
+    #set ($termUrl = "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=EN&amp;Expert=${termId}")
+  #elseif ("$!{vocabulary}" == 'MIM')
+    ## Custom non-prefixed display for OMIM
+    #set ($displayId = "$!{stringtool.defaultString($!term.symbol, ' ')}${termId}")
+    #set ($termUrl = "http://www.omim.org/entry/${termId}")
+  #elseif ("$!{vocabulary}" == 'MONDO')
+    #set ($termUrl = "http://purl.obolibrary.org/obo/MONDO_${termId}")
+  #end
+  ## Display the term
+  $!escapetool.xml($name)
+  #if ("$!termUrl" != "")
+    &lt;a href="$!escapetool.xml($!termUrl)" class="term-id"&gt;$!escapetool.xml($!displayId)&lt;/a&gt;
+  #else
+    &lt;span class="term-id"&gt;$!escapetool.xml($!displayId)&lt;/span&gt;
+  #end
+&lt;/div&gt;
+#end
+
+#macro (__displayFreetext $term)
+&lt;div class="vocabulary-term"&gt;
+  &lt;span class="fa fa-fa fa-exclamation-triangle fa-fw" title="$!escapetool.xml($services.localization.render('phenotips.patientSheetCode.termSuggest.nonStandardDisorder'))"&gt;&amp;nbsp;&lt;/span&gt;
+  $!escapetool.xml($term)
+&lt;/div&gt;
+#end
+
+#macro (__displayTermOrFreetext $value)
+    ## Add terminology prefix for OMIM terms
+    #set ($termId = $value)
+    #if ($termId &amp;&amp; $termId.indexOf(':') &lt; 0)
+      #set ($termId = "MIM:${termId}")
+    #end
+    #set ($term = $!{services.vocabularies.resolveTerm($termId)})
+    #if ($term)
+      #__displayTerm($term)
+    #else
+      #__displayFreetext($value)
+    #end
+#end
+
+#macro (__displayDiagnosisTerms $suggestVocabulary $values)
+## $prefix and $name are set by velocity
+{{html wiki="false" clean="false"}}
+#if ($xcontext.action == 'edit')
+  &lt;div class="custom-display-data"&gt;
+  #foreach ($val in $values)
+    ## Add terminology prefix for OMIM terms
+    #set ($termId = $val)
+    #if ($termId &amp;&amp; $termId.indexOf(':') &lt; 0)
+      #set ($termId = "MIM:${termId}")
+    #end
+    #set($entryName = "$!{services.vocabularies.resolveTerm($termId).name}")
+    #if ($entryName == '')
+      #set($entryName = $val)
+    #end
+    &lt;label class="term-entry" for="${prefix}${name}_${escapetool.xml($val)}"&gt;
+      &lt;input title="${escapetool.xml($entryName)}" type="checkbox" checked="checked" name="${prefix}${name}" id="${prefix}${name}_${escapetool.xml($val)}" value="${escapetool.xml($val)}"/&gt;${escapetool.xml($entryName)}
+    &lt;/label&gt;
+  #end
+  &lt;/div&gt;
+  &lt;input type="text" name="${prefix}${name}" id="${prefix}${name}" value="" class="suggested suggest-${suggestVocabulary} multi generateShortList"/&gt;
+  &lt;input type="hidden" name="${prefix}${name}" value=""/&gt;
+#elseif ($values &amp;&amp; $values.size() &gt; 0 &amp;&amp; "${values.get(0)}" != '')
+  &lt;div class="vocabulary-term-list"&gt;
+  #foreach ($val in $values)
+    #__displayTermOrFreetext($val)
+  #end
+  &lt;/div&gt;
+#end
+{{/html}}
+#end
+{{/velocity}}</content>
+</xwikidoc>
