@@ -1125,7 +1125,7 @@ define([
          * Returns disorder with given id if this person has it. Returns null otherwise.
          *
          * @method getDisorderByID
-         * @param {Number} id Disorder ID, taken from the OMIM database
+         * @param {Number} id Disorder ID
          * @return {Disorder}
          */
         hasDisorder: function(id) {

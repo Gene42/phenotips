@@ -1,8 +1,8 @@
 /*
- * Disorder is a class for storing genetic disorder info and loading it from the
- * the OMIM database. These disorders can be attributed to an individual in the Pedigree.
+ * Disorder is a class for storing genetic disorder info.
+ * These disorders can be attributed to an individual in the Pedigree.
  *
- * @param disorderID the id number for the disorder, taken from the OMIM database
+ * @param disorderID the id number for the disorder
  * @param name a string representing the name of the disorder e.g. "Down Syndrome"
  */
 define([
@@ -13,11 +13,6 @@ define([
     var Disorder = Class.create( {
 
         initialize: function(disorderID, name, callWhenReady) {
-            // user-defined disorders
-            if (name == null && !Helpers.isInt(disorderID)) {
-                name = disorderID;
-            }
-
             this._disorderID = disorderID;
             this._name       = name ? name : "loading...";
 
@@ -40,31 +35,49 @@ define([
         },
 
         load: function(callWhenReady) {
-            var baseOMIMServiceURL = editor.getExternalEndpoint().getOMIMServiceURL();
-            var queryURL           = baseOMIMServiceURL + "&q=id:" + this._disorderID;
-            //console.log("queryURL: " + queryURL);
-            new Ajax.Request(queryURL, {
-                method: "GET",
-                onSuccess: this.onDataReady.bind(this),
-                //onComplete: complete.bind(this)
-                onComplete: callWhenReady ? callWhenReady : {}
-            });
+            // Convert to fully-prefixed term
+            var curie = this._disorderID;
+            if (curie.indexOf(':') < 0) {
+                if (Helpers.isInt(curie)) {
+                    // Treat it like an OMIM term
+                    curie = 'MIM:' + curie;
+                } else {
+                    // Freetext term
+                    curie = '';
+                    this._name = this._disorderID;
+                }
+            }
+
+            if (curie) {
+                var queryURL = editor.getExternalEndpoint().getDisorderDetailsURL(curie);
+                new Ajax.Request(queryURL, {
+                    method: "GET",
+                    onSuccess: this.onDataReady.bind(this),
+                    onFailure: this.onDataError.bind(this),
+                    onComplete: callWhenReady ? callWhenReady : {}
+                });
+            }
         },
 
         onDataReady : function(response) {
             this._name = this._disorderID;
             try {
                 var parsed = JSON.parse(response.responseText);
-                //console.log(Helpers.stringifyObject(parsed));
-                if (parsed.hasOwnProperty("rows") && parsed.rows.length > 0) {
-                    console.log("LOADED DISORDER: disorder id = " + this._disorderID + ", name = " + parsed.rows[0].name);
-                    this._name = parsed.rows[0].name;
+                if (parsed && parsed.hasOwnProperty("name")) {
+                    console.log("LOADED DISORDER: disorder id = " + this._disorderID + ", name = " + parsed.name);
+                    this._name = parsed.name;
                 } else {
                     console.log("LOADED DISORDER: id = " + this._disorderID + " -> NO DATA");
                 }
             } catch (err) {
-                console.log("[LOAD DISORDER] Parse error: " +  err);
+                console.log("[LOAD DISORDER] Parse error for disorder: " + this._disorderID);
             }
+        },
+
+        onDataError : function(response) {
+            console.log("[LOAD DISORDER] Data error for disorder: " + this._disorderID);
+            // Unable to resolve term, so use id as term name
+            this._name = this._disorderID;
         }
     });
 

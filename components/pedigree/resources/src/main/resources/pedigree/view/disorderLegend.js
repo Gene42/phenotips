@@ -8,9 +8,11 @@
  */
 define([
         "pedigree/disorder",
+        "pedigree/model/helpers",
         "pedigree/view/legend"
     ], function(
         Disorder,
+        Helpers,
         Legend
     ){
     var DisorderLegend = Class.create( Legend, {
@@ -74,10 +76,14 @@ define([
          * @private
          */
         _updateDisorderName: function(disorderID) {
-            //console.log("updating disorder display for " + disorderID + ", name = " + this.getDisorder(disorderID).getName());
-            var nameElement = this._legendBox.down('li#' + this._getPrefix() + '-' + disorderID + ' .disorder-name');
+            // Handle cases where disorder id's might be freetext or prefixed terms and would interfere with CSS selection
+            var htmlID = Helpers.isInt(disorderID) ? disorderID : this._hashID(disorderID);
+            var selector = 'li#' + this._getPrefix() + '-' + htmlID + ' .disorder-name';
+            var nameElement = this._legendBox.down(selector);
             var name = this.getDisorder(disorderID).getName();
-            nameElement.update(name);
+            if (nameElement) {
+                nameElement.update(name);
+            }
             document.fire('disorder:name', {'id' : disorderID, 'name': name});
         },
 

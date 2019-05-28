@@ -251,20 +251,11 @@ define([
                 }
             });
             // disease
-            this.form.select('input.suggest-omim').each(function(item) {
+            this.form.select('input.suggest-disorders').each(function(item) {
                 if (!item.hasClassName('initialized')) {
                     // Create the Suggest.
                     item._suggest = new PhenoTips.widgets.Suggest(item, {
-                        script: editor.getExternalEndpoint().getOMIMServiceURL() + "&",
-                        queryProcessor: typeof(PhenoTips.widgets.SolrQueryProcessor) == "undefined" ? null : new PhenoTips.widgets.SolrQueryProcessor({
-                            'name' : {'wordBoost': 20, 'phraseBoost': 40},
-                            'nameSpell' : {'wordBoost': 50, 'phraseBoost': 100, 'stubBoost': 20},
-                            'keywords' : {'wordBoost': 2, 'phraseBoost': 6, 'stubBoost': 2},
-                            'text' : {'wordBoost': 1, 'phraseBoost': 3, 'stubBoost': 1},
-                            'textSpell' : {'wordBoost': 2, 'phraseBoost': 5, 'stubBoost': 2, 'stubTrigger': true}
-                            }, {
-                            '-nameSort': ['\\**', '\\+*', '\\^*']
-                            }),
+                        script: editor.getExternalEndpoint().getDisorderSuggestURL() + "&",
                         varname: "q",
                         noresults: "No matching terms",
                         json: true,
@@ -275,7 +266,7 @@ define([
                         enableHierarchy: false,
                         fadeOnClear : false,
                         timeout : 30000,
-                        tooltip: 'omim-disease-info',
+                        tooltip: 'mondo-disease-info',
                         parentContainer : item.up()
                     });
                     if (item.hasClassName('multi') && typeof(PhenoTips.widgets.SuggestPicker) != "undefined") {
@@ -656,7 +647,7 @@ define([
             },
             'disease-picker' : function (data) {
                 var result = this._generateEmptyField(data);
-                var diseasePicker = new Element('input', {type: 'text', 'class': 'suggest multi suggest-omim', name: data.name});
+                var diseasePicker = new Element('input', {type: 'text', 'class': 'suggest multi suggest-disorders', name: data.name});
                 result.insert(diseasePicker);
                 diseasePicker._getValue = function() {
                     var results = [];
@@ -1308,7 +1299,7 @@ define([
             },
             'disease-picker' : function (container, values) {
                 var _this = this;
-                var target = container.down('input[type=text].suggest-omim');
+                var target = container.down('input[type=text].suggest-disorders');
                 if (target && target._suggestPicker) {
                     target._silent = true;
                     target._suggestPicker.clearAcceptedList();

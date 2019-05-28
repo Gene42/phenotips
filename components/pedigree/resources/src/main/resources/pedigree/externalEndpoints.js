@@ -140,6 +140,15 @@ define([
             return new XWiki.Document('WebHome', 'data').getRestURL('objects/PhenoTips.PedigreeClass/');
         },
 
+        getDisorderDetailsURL: function(term) {
+            // Must be a term of the form: PREFIX:XXXXXX
+            return XWiki.contextPath + "/rest/vocabularies/terms/" + term;
+        },
+
+        getDisorderSuggestURL: function() {
+            return this.solrService.getURL("get", 'vocabulary=mondo');
+        },
+
         getOMIMServiceURL: function() {
             return this.omimService.getURL("get", 'outputSyntax=plain&rand='+ Math.random());
         },
