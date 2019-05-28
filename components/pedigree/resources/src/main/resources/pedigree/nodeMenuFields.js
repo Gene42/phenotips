@@ -105,7 +105,7 @@ define([
             },
             {
                 'name' : 'disorders',
-                'label' : 'Final diagnosis',
+                'label' : 'Diagnosis',
                 'type' : 'disease-picker',
                 'tab': 'Clinical',
                 'function' : 'setDisorders'
@@ -368,7 +368,7 @@ define([
             },
             {
                 'name' : 'disorders',
-                'label' : 'Final diagnosis<br/>(common to all individuals in the group)',
+                'label' : 'Diagnosis<br/>(common to all individuals in the group)',
                 'type' : 'disease-picker',
                 'tab': 'Clinical',
                 'function' : 'setDisorders'
