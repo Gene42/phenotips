@@ -632,7 +632,8 @@ define([
         },
 
         /**
-         * Sets the global disorder carrier status for this Person
+         * Sets the global disorder carrier status for this Person.
+         * If null or undefined, updates the carrier status based on the list of diagnoses.
          *
          * @method setCarrier
          * @param status One of {'', 'carrier', 'affected', 'presymptomatic', 'uncertain'}
@@ -642,10 +643,14 @@ define([
 
             if (status === undefined || status === null) {
                 if (numDisorders == 0) {
-                    status = ""
+                    status = "";
                 } else {
                     status = this.getCarrierStatus();
-                    if (status == "") {
+                    if (status === "affected" && this.getDisorders()[0] !== "affected") {
+                        // affected was removed from the diagnosis list
+                        status = "";
+                    } else if (status === "" && this.getDisorders()[0] === "affected") {
+                        // affected was added to the diagnosis list
                         status = "affected";
                     }
                 }
@@ -653,15 +658,13 @@ define([
 
             if (!this._isValidCarrierStatus(status)) return;
 
-            if (numDisorders > 0 && status == '') {
-                if (numDisorders == 1 && this.getDisorders()[0] == "affected") {
-                    this.removeDisorder("affected");
-                    this.getGraphics().updateDisorderShapes();
-                } else {
-                    status = 'affected';
-                }
-            } else if (numDisorders == 0 && status == 'affected') {
+            if (status == 'affected' && (numDisorders == 0 || this.getDisorders()[0] !== 'affected')) {
+                // Create nonstandard 'affected' disorder
                 this.addDisorder("affected");
+                this.getGraphics().updateDisorderShapes();
+            } else if (status == '' && numDisorders > 0 && this.getDisorders()[0] === "affected") {
+                // Remove nonstandard 'affected' disorder
+                this.removeDisorder("affected");
                 this.getGraphics().updateDisorderShapes();
             }
 
@@ -732,26 +735,28 @@ define([
 
         /**
          * Adds disorder to the list of this node's disorders and updates the Legend.
+         * If adding custom 'affected' disorder, this will always be first in the list.
          *
          * @method addDisorder
          * @param {Disorder} disorder Disorder object or a free-text name string
+         *
          */
         addDisorder: function(disorder) {
             if (typeof disorder != 'object') {
                 disorder = editor.getDisorderLegend().getDisorder(disorder);
             }
-            if(!this.hasDisorder(disorder.getDisorderID())) {
-                editor.getDisorderLegend().addCase(disorder.getDisorderID(), disorder.getName(), this.getID());
-                this.getDisorders().push(disorder.getDisorderID());
-            }
-            else {
+            var newDisorderId = disorder.getDisorderID();
+            if (!this.hasDisorder(newDisorderId)) {
+                editor.getDisorderLegend().addCase(newDisorderId, disorder.getName(), this.getID());
+                if (newDisorderId === 'affected') {
+                    // Pre-pend to keep custom 'affected' disorder first
+                    this.getDisorders().unshift(newDisorderId);
+                } else {
+                    // Append
+                    this.getDisorders().push(newDisorderId);
+                }
+            } else {
                 alert("This person already has the specified disorder");
-            }
-
-            // if any "real" disorder has been added
-            // the virtual "affected" disorder should be automatically removed
-            if (this.getDisorders().length > 1) {
-                this.removeDisorder("affected");
             }
         },
 
@@ -762,14 +767,11 @@ define([
          * @param {Number} disorderID id of the disorder to be removed
          */
         removeDisorder: function(disorderID) {
-            if(this.hasDisorder(disorderID)) {
+            if (this.hasDisorder(disorderID)) {
                 editor.getDisorderLegend().removeCase(disorderID, this.getID());
                 this._disorders = this.getDisorders().without(disorderID);
-            }
-            else {
-                if (disorderID != "affected") {
-                    alert("This person doesn't have the specified disorder");
-                }
+            } else if (disorderID !== "affected") {
+                alert("This person doesn't have the specified disorder");
             }
         },
 
@@ -1203,11 +1205,6 @@ define([
             }
 
             var inactiveCarriers = [];
-            if (disorders.length > 0) {
-                if (disorders.length != 1 || disorders[0].id != "affected") {
-                    inactiveCarriers = [''];
-                }
-            }
             if (this.getLifeStatus() == "aborted" || this.getLifeStatus() == "miscarriage") {
                 inactiveCarriers.push('presymptomatic');
             }
