@@ -633,36 +633,41 @@ define([
 
         /**
          * Sets the global disorder carrier status for this Person.
-         * If null or undefined, updates the carrier status based on the list of diagnoses.
+         * If status is null or undefined, set the carrier status based on the list of diagnoses.
+         *   (set to 'affected' if "affected" is a diagnosis, else leave as is, unless it is currently affected, in which case, switch to unaffected)
+         * If status is 'affected', add an "affected" freetext diagnosis.
+         * If status is '', remove any "affected" freetext diagnosis.
          *
          * @method setCarrier
          * @param status One of {'', 'carrier', 'affected', 'presymptomatic', 'uncertain'}
          */
         setCarrierStatus: function(status) {
             var numDisorders = this.getDisorders().length;
+            var hasAffectedDisorder = numDisorders > 0 && this.getDisorders()[0] === "affected";
 
             if (status === undefined || status === null) {
-                if (numDisorders == 0) {
+                // set status based on disorders
+                var oldStatus = this.getCarrierStatus();
+
+                if (oldStatus === "affected" && !hasAffectedDisorder) {
+                    // affected was removed from the diagnosis list; set to unaffected
                     status = "";
+                } else if (oldStatus === "" && hasAffectedDisorder) {
+                    // affected was added to the diagnosis list; set to affected
+                    status = "affected";
                 } else {
-                    status = this.getCarrierStatus();
-                    if (status === "affected" && this.getDisorders()[0] !== "affected") {
-                        // affected was removed from the diagnosis list
-                        status = "";
-                    } else if (status === "" && this.getDisorders()[0] === "affected") {
-                        // affected was added to the diagnosis list
-                        status = "affected";
-                    }
+                    // keep the status the same
+                    status = oldStatus;
                 }
             }
 
             if (!this._isValidCarrierStatus(status)) return;
 
-            if (status == 'affected' && (numDisorders == 0 || this.getDisorders()[0] !== 'affected')) {
+            if (status == 'affected' && !hasAffectedDisorder) {
                 // Create nonstandard 'affected' disorder
                 this.addDisorder("affected");
                 this.getGraphics().updateDisorderShapes();
-            } else if (status == '' && numDisorders > 0 && this.getDisorders()[0] === "affected") {
+            } else if (status == '' && hasAffectedDisorder) {
                 // Remove nonstandard 'affected' disorder
                 this.removeDisorder("affected");
                 this.getGraphics().updateDisorderShapes();
