@@ -23,12 +23,12 @@
   <parent>
     <groupId>org.phenotips</groupId>
     <artifactId>patient-data</artifactId>
-    <version>1.4.5</version>
+    <version>1.4.9</version>
   </parent>
   <artifactId>patient-data-api</artifactId>
   <name>PhenoTips - Patient data - Java APIs</name>
 
-  <version>1.4.5-gene42</version>
+  <version>1.4.9-gene42</version>
   <properties>
     <coverage.instructionRatio>0.93</coverage.instructionRatio>
   </properties>
