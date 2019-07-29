@@ -23,15 +23,29 @@
   <parent>
     <groupId>org.phenotips</groupId>
     <artifactId>patient-data</artifactId>
-    <version>1.4.5</version>
+    <version>1.4.9</version>
   </parent>
   <artifactId>patient-data-rest</artifactId>
   <name>PhenoTips - Patient Data - REST services</name>
 
-  <version>1.4.5-gene42</version>
+  <version>1.4.9-gene42</version>
   <properties>
     <coverage.instructionRatio>0.91</coverage.instructionRatio>
   </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>nexus.gene42.com</id>
+      <name>Maven2 Remote Repository for Releases</name>
+      <url>https://nexus.gene42.com/repository/gene42-public-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus.gene42.com</id>
+      <name>Maven2 Development Repository for Snapshots</name>
+      <url>https://nexus.gene42.com/repository/gene42-public-snapshots/</url>
+    </snapshotRepository>
+    <site />
+  </distributionManagement>
 
   <dependencies>
     <dependency>
